@@ -81,7 +81,7 @@ public class Tests
 
         sut.Grow();
 
-        sut.Length.Should().Be(2);
+        sut.Count().Should().Be(2);
     }
 
     [Test]
@@ -118,13 +118,13 @@ public class Tests
 
         sut.Move(new SnakeGame(sut) { Fruit = (1, 0) });
 
-        sut.Length.Should().Be(2);
+        sut.Count().Should().Be(2);
     }
     
     [Test]
     public void SnakeLength_IsOne_ByDefault()
     {
-        new Snake().Length.Should().Be(1);
+        new Snake().Count().Should().Be(1);
     }
 
     [Test]
