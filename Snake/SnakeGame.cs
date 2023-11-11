@@ -14,6 +14,4 @@ public class SnakeGame
     {
         snake.Drag();
     }
-
-    public bool ExistsSnakeAt((int, int) cell) => snake.IsEatingItselfAt(cell);
 }

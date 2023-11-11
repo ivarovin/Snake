@@ -32,13 +32,13 @@ public class SnakeGameTests
     [Test]
     public void Check_IfSnakeBodyExists_AtPosition()
     {
-        var doc = new Snake();
+        var sut = new Snake();
         
-        doc.Grow();
-        doc.Drag();
+        sut.Grow();
+        sut.Drag();
         
         using var _ = new AssertionScope();
-        new SnakeGame(doc).ExistsSnakeAt((0, 0)).Should().BeTrue();
-        new SnakeGame(doc).ExistsSnakeAt((1, 0)).Should().BeTrue();
+        sut.IsEatingItselfAt((0, 0)).Should().BeTrue();
+        sut.IsEatingItselfAt((1, 0)).Should().BeTrue();
     }
 }
