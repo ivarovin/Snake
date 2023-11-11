@@ -20,6 +20,6 @@ public class SnakeGame
         if (snake.Any(bodyPart => bodyPart == cell))
             return true;
 
-        return snake.X == cell.Item1 && snake.Y == cell.Item2;
+        return snake.Head.x == cell.Item1 && snake.Head.y == cell.Item2;
     }
 }

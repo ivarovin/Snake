@@ -19,7 +19,7 @@ public class SnakeGameTests
 
         sut.Tick();
 
-        doc.X.Should().Be(1);
+        doc.Head.x.Should().Be(1);
     }
 
     [Test]

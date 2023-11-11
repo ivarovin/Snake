@@ -21,7 +21,7 @@ public class Tests
 
         sut.Move();
 
-        sut.X.Should().Be(1);
+        sut.Head.x.Should().Be(1);
     }
 
     [Test]
@@ -32,8 +32,8 @@ public class Tests
         sut.TurnLeft();
         sut.Move();
 
-        sut.X.Should().Be(0);
-        sut.Y.Should().Be(1);
+        sut.Head.x.Should().Be(0);
+        sut.Head.y.Should().Be(1);
     }
 
     [Test]
@@ -44,8 +44,8 @@ public class Tests
         sut.TurnRight();
         sut.Move();
 
-        sut.X.Should().Be(0);
-        sut.Y.Should().Be(-1);
+        sut.Head.x.Should().Be(0);
+        sut.Head.y.Should().Be(-1);
     }
 
     [Test]
@@ -57,8 +57,8 @@ public class Tests
         sut.TurnRight();
         sut.Move();
 
-        sut.X.Should().Be(-1);
-        sut.Y.Should().Be(0);
+        sut.Head.x.Should().Be(-1);
+        sut.Head.y.Should().Be(0);
     }
 
     [Test]
@@ -70,8 +70,8 @@ public class Tests
         sut.TurnLeft();
         sut.Move();
 
-        sut.X.Should().Be(-1);
-        sut.Y.Should().Be(0);
+        sut.Head.x.Should().Be(-1);
+        sut.Head.y.Should().Be(0);
     }
 
     [Test]
@@ -106,7 +106,7 @@ public class Tests
         sut.Move();
         sut.Move();
 
-        sut.X.Should().Be(3);
+        sut.Head.x.Should().Be(3);
         sut.ElementAt(1).Should().Be((2, 0));
         sut.ElementAt(2).Should().Be((1, 0));
     }

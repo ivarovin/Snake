@@ -7,8 +7,6 @@ public class Snake : IEnumerable<(int x, int y)>
     readonly List<(int x, int y)> body = new() { (0, 0) };
     public (int x, int y) Head => body[0];
     (int x, int y) Direction { get; set; } = (1, 0);
-    public int X => Head.x;
-    public int Y => Head.y;
     public int Length => body.Count;
     public bool IsDead { get; set; }
 
@@ -18,7 +16,7 @@ public class Snake : IEnumerable<(int x, int y)>
             IsDead = true;
 
         Move();
-        if (where.Fruit == (X, Y))
+        if (where.Fruit == (X: Head.x, Y: Head.y))
             Grow();
     }
 
@@ -29,7 +27,7 @@ public class Snake : IEnumerable<(int x, int y)>
     }
 
     void MoveForward() => body[0] = NextPosition;
-    (int x, int y) NextPosition => (X + Direction.x, Y + Direction.y);
+    (int x, int y) NextPosition => (Head.x + Direction.x, Head.y + Direction.y);
 
     void DragBody()
     {
@@ -50,7 +48,7 @@ public class Snake : IEnumerable<(int x, int y)>
             _ => throw new Exception("Invalid direction")
         };
 
-    public void Grow() => body.Add((X, Y));
+    public void Grow() => body.Add((Head.x, Head.y));
 
     public IEnumerator<(int x, int y)> GetEnumerator() => body.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
