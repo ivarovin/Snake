@@ -135,12 +135,16 @@ public class Tests
 
         sut.Grow();
         sut.Move(doc);
+        sut.Grow();
         sut.TurnLeft();
+        sut.Move(doc);
+        sut.Grow();
+        sut.TurnLeft();
+        sut.Grow();
         sut.Move(doc);
         sut.TurnLeft();
         sut.Move(doc);
         sut.TurnLeft();
-        sut.Move(doc);
         sut.Move(doc);
 
         sut.IsDead.Should().BeTrue();
