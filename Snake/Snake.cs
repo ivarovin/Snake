@@ -15,10 +15,18 @@ public class Snake : IEnumerable<(int x, int y)>
         if (IsEatingItselfAt(NextPosition))
             IsDead = true;
         if (Fruit == NextPosition)
-            Grow();
+            EatFruit();
 
         Drag();
     }
+
+    void EatFruit()
+    {
+        Grow();
+        CultivateNewFruit();
+    }
+
+    void CultivateNewFruit() => Fruit = (new Random().Next(-10, 10), new Random().Next(-10, 10));
 
     public void Drag() => body = body.Select((part, i) => InFrontOf(i)).ToList();
     (int x, int y) InFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : body[bodyIndex - 1];

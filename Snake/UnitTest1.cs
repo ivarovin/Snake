@@ -180,4 +180,14 @@ public class Tests
         sut.IsEatingItselfAt((0, 0)).Should().BeTrue();
         sut.IsEatingItselfAt((1, 0)).Should().BeTrue();
     }
+
+    [Test]
+    public void GrowFruit_InNewPosition_WhenEaten()
+    {
+        var sut = new Snake { Fruit = (1, 0) };
+
+        sut.Move();
+
+        sut.Fruit.Should().NotBe((1, 0));
+    }
 }
