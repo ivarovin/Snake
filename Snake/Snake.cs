@@ -4,7 +4,7 @@ namespace Snake;
 
 public class Snake : IEnumerable<(int x, int y)>
 {
-    readonly List<(int x, int y)> body = new() { (0, 0) };
+    List<(int x, int y)> body = new() { (0, 0) };
     public (int x, int y) Head => body[0];
     (int x, int y) Direction { get; set; } = (1, 0);
     public bool IsDead { get; private set; }
@@ -16,24 +16,13 @@ public class Snake : IEnumerable<(int x, int y)>
         if (where.Fruit == NextPosition)
             Grow();
 
-        Move();
+        Drag();
     }
 
-    public void Move()
-    {
-        DragBody();
-        MoveForward();
-    }
+    public void Drag() 
+        => body =  body.Select((part, index) => index == 0 ? NextPosition : body[index - 1]).ToList();
 
-    void MoveForward() => body[0] = NextPosition;
     (int x, int y) NextPosition => (Head.x + Direction.x, Head.y + Direction.y);
-
-    void DragBody()
-    {
-        for (var i = body.Count - 1; i > 0; i--)
-            body[i] = body[i - 1];
-    }
-
     public void TurnLeft() => Direction = RightDirectionOf((Direction.x * -1, Direction.y * -1));
     public void TurnRight() => Direction = RightDirectionOf(Direction);
 

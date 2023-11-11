@@ -12,7 +12,7 @@ public class SnakeGame
     
     public void Tick()
     {
-        snake.Move();
+        snake.Drag();
     }
 
     public bool ExistsSnakeAt((int, int) cell)

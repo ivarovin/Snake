@@ -35,7 +35,7 @@ public class SnakeGameTests
         var doc = new Snake();
         
         doc.Grow();
-        doc.Move();
+        doc.Drag();
         
         using var _ = new AssertionScope();
         new SnakeGame(doc).ExistsSnakeAt((0, 0)).Should().BeTrue();

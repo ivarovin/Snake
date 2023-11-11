@@ -19,7 +19,7 @@ public class Tests
     {
         var sut = new Snake();
 
-        sut.Move();
+        sut.Drag();
 
         sut.Head.x.Should().Be(1);
     }
@@ -30,7 +30,7 @@ public class Tests
         var sut = new Snake();
 
         sut.TurnLeft();
-        sut.Move();
+        sut.Drag();
 
         sut.Head.x.Should().Be(0);
         sut.Head.y.Should().Be(1);
@@ -42,7 +42,7 @@ public class Tests
         var sut = new Snake();
 
         sut.TurnRight();
-        sut.Move();
+        sut.Drag();
 
         sut.Head.x.Should().Be(0);
         sut.Head.y.Should().Be(-1);
@@ -55,7 +55,7 @@ public class Tests
 
         sut.TurnRight();
         sut.TurnRight();
-        sut.Move();
+        sut.Drag();
 
         sut.Head.x.Should().Be(-1);
         sut.Head.y.Should().Be(0);
@@ -68,7 +68,7 @@ public class Tests
 
         sut.TurnLeft();
         sut.TurnLeft();
-        sut.Move();
+        sut.Drag();
 
         sut.Head.x.Should().Be(-1);
         sut.Head.y.Should().Be(0);
@@ -90,7 +90,7 @@ public class Tests
         var sut = new Snake();
 
         sut.Grow();
-        sut.Move();
+        sut.Drag();
 
         sut.ElementAt(1).Should().Be((0, 0));
     }
@@ -101,10 +101,10 @@ public class Tests
         var sut = new Snake();
 
         sut.Grow();
-        sut.Move();
+        sut.Drag();
         sut.Grow();
-        sut.Move();
-        sut.Move();
+        sut.Drag();
+        sut.Drag();
 
         sut.Head.x.Should().Be(3);
         sut.ElementAt(1).Should().Be((2, 0));
