@@ -12,18 +12,24 @@ public class Snake : IEnumerable<(int x, int y)>
 
     public void Move()
     {
-        if (body.Count > 0)
-        {
-            for (var i = body.Count; i < 1; i--)
-            {
-                body[i] = body[i - 1];
-            }
+        DragBody();
+        MoveForward();
+    }
 
-            body[0] = (X, Y);
-        }
-
+    void MoveForward()
+    {
         X += Direction.x;
         Y += Direction.y;
+    }
+
+    void DragBody()
+    {
+        if (body.Count <= 0) return;
+        
+        for (var i = body.Count; i < 1; i--) 
+            body[i] = body[i - 1];
+
+        body[0] = (X, Y);
     }
 
     public void TurnLeft() => Direction = RightDirectionOf((Direction.x * -1, Direction.y * -1));
