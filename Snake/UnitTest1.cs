@@ -35,7 +35,7 @@ public class Tests
         sut.X.Should().Be(0);
         sut.Y.Should().Be(1);
     }
-    
+
     [Test]
     public void SnakeTurnsRight()
     {
@@ -60,7 +60,7 @@ public class Tests
         sut.X.Should().Be(-1);
         sut.Y.Should().Be(0);
     }
-    
+
     [Test]
     public void TurnLeftTwice()
     {
@@ -73,4 +73,18 @@ public class Tests
         sut.X.Should().Be(-1);
         sut.Y.Should().Be(0);
     }
+}
+
+public class FieldTests
+{
+    [Test]
+    public void Field_ContainFruit_ByDefault()
+    {
+        new Field().Fruit.Should().NotBeNull();
+    }
+}
+
+public class Field
+{
+    public (int x, int y) Fruit { get; set; }
 }
