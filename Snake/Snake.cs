@@ -36,7 +36,7 @@ public class Snake : IEnumerable<(int x, int y)>
             _ => throw new Exception("Invalid direction")
         };
 
-    public void Grow() => body.Add((Head.x, Head.y));
+    public void Grow() => body.Add(Head);
     public bool IsEatingItselfAt((int x, int y) nextPosition) => body.Any(bodyPart => bodyPart == nextPosition);
     public IEnumerator<(int x, int y)> GetEnumerator() => body.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
