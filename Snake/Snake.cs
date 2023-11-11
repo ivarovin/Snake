@@ -12,21 +12,11 @@ public class Snake
         Y += Direction.y;
     }
 
-    public void TurnLeft()
-    {
-        Direction = Direction switch
-        {
-            (1, 0) => (0, 1),
-            (0, 1) => (-1, 0),
-            (-1, 0) => (0, -1),
-            (0, -1) => (1, 0),
-            _ => throw new Exception("Invalid direction")
-        };
-    }
+    public void TurnLeft() => Direction = RightDirectionOf((Direction.x * -1, Direction.y * -1));
+    public void TurnRight() => Direction = RightDirectionOf(Direction);
 
-    public void TurnRight()
-    {
-        Direction = Direction switch
+    static (int x, int y) RightDirectionOf((int x, int y) direction)
+        => direction switch
         {
             (1, 0) => (0, -1),
             (0, -1) => (-1, 0),
@@ -34,5 +24,4 @@ public class Snake
             (0, 1) => (1, 0),
             _ => throw new Exception("Invalid direction")
         };
-    }
 }
