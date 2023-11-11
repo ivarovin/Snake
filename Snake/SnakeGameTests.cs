@@ -1,4 +1,5 @@
 using FluentAssertions;
+using FluentAssertions.Execution;
 
 namespace Snake;
 
@@ -26,5 +27,18 @@ public class SnakeGameTests
     {
         new SnakeGame(new Snake()).ExistsSnakeAt((0, 0)).Should().BeTrue();
         new SnakeGame(new Snake()).ExistsSnakeAt((1, 0)).Should().BeFalse();
+    }
+
+    [Test]
+    public void Check_IfSnakeBodyExists_AtPosition()
+    {
+        var doc = new Snake();
+        
+        doc.Grow();
+        doc.Move();
+        
+        using var _ = new AssertionScope();
+        new SnakeGame(doc).ExistsSnakeAt((0, 0)).Should().BeTrue();
+        new SnakeGame(doc).ExistsSnakeAt((1, 0)).Should().BeTrue();
     }
 }

@@ -15,8 +15,11 @@ public class SnakeGame
         snake.Move();
     }
 
-    public bool ExistsSnakeAt((int, int) valueTuple)
+    public bool ExistsSnakeAt((int, int) cell)
     {
-        return snake.X == valueTuple.Item1 && snake.Y == valueTuple.Item2;
+        if (snake.Any(bodyPart => bodyPart == cell))
+            return true;
+
+        return snake.X == cell.Item1 && snake.Y == cell.Item2;
     }
 }
