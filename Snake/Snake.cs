@@ -10,7 +10,7 @@ public class Snake : IEnumerable<(int x, int y)>
     (int x, int y) Direction { get; set; } = (1, 0);
     public bool IsDead { get; private set; }
 
-    public void Move(SnakeGame where)
+    public void Move()
     {
         if (IsEatingItselfAt(NextPosition))
             IsDead = true;
