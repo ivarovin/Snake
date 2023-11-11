@@ -13,10 +13,10 @@ public class Snake : IEnumerable<(int x, int y)>
     {
         if (where.ExistsSnakeAt(NextPosition))
             IsDead = true;
+        if (where.Fruit == NextPosition)
+            Grow();
 
         Move();
-        if (where.Fruit == (X: Head.x, Y: Head.y))
-            Grow();
     }
 
     public void Move()

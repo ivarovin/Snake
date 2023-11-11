@@ -120,7 +120,7 @@ public class Tests
 
         sut.Count().Should().Be(2);
     }
-    
+
     [Test]
     public void SnakeLength_IsOne_ByDefault()
     {
@@ -148,5 +148,17 @@ public class Tests
         sut.Move(doc);
 
         sut.IsDead.Should().BeTrue();
+    }
+
+    [Test]
+    public void Grow_BeforeMoving()
+    {
+        var sut = new Snake();
+        var doc = new SnakeGame(sut) { Fruit = (1, 0) };
+
+        sut.Move(doc);
+
+        sut.Head.Should().Be((1, 0));
+        sut.ElementAt(1).Should().Be((0, 0));
     }
 }
