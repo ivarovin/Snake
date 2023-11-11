@@ -35,6 +35,18 @@ public class Tests
         sut.X.Should().Be(0);
         sut.Y.Should().Be(1);
     }
+    
+    [Test]
+    public void SnakeTurnsRight()
+    {
+        var sut = new Snake();
+
+        sut.TurnRight();
+        sut.Move();
+
+        sut.X.Should().Be(0);
+        sut.Y.Should().Be(-1);
+    }
 }
 
 public class Snake
@@ -52,5 +64,10 @@ public class Snake
     public void TurnLeft()
     {
         Direction = (0, 1);
+    }
+
+    public void TurnRight()
+    {
+        Direction = (0, -1);
     }
 }
