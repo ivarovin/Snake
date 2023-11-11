@@ -94,4 +94,20 @@ public class Tests
 
         sut.ElementAt(0).Should().Be((0, 0));
     }
+
+    [Test]
+    public void Snake_Drags_ItsBody()
+    {
+        var sut = new Snake();
+
+        sut.Grow();
+        sut.Move();
+        sut.Grow();
+        sut.Move();
+        sut.Move();
+
+        sut.X.Should().Be(3);
+        sut.ElementAt(0).Should().Be((2, 0));
+        sut.ElementAt(1).Should().Be((1, 0));
+    }
 }
