@@ -126,4 +126,23 @@ public class Tests
     {
         new Snake().Length.Should().Be(0);
     }
+
+    [Test]
+    public void DieBy_EatingItself()
+    {
+        var sut = new Snake();
+        var doc = new SnakeGame(sut);
+
+        sut.Grow();
+        sut.Move(doc);
+        sut.TurnLeft();
+        sut.Move(doc);
+        sut.TurnLeft();
+        sut.Move(doc);
+        sut.TurnLeft();
+        sut.Move(doc);
+        sut.Move(doc);
+
+        sut.IsDead.Should().BeTrue();
+    }
 }

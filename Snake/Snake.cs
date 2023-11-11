@@ -9,6 +9,7 @@ public class Snake : IEnumerable<(int x, int y)>
     public int Y { get; private set; }
     (int x, int y) Direction { get; set; } = (1, 0);
     public int Length => body.Count;
+    public bool IsDead { get; set; }
 
     public void Move()
     {
