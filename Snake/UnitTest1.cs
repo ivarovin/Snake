@@ -194,7 +194,7 @@ public class Tests
     {
         var sut = new SnakeGame();
 
-        for (var i = 0; i < 12; i++)
+        for (var i = 0; i < 11; i++)
             sut.Tick();
 
         sut.GameOver.Should().BeTrue();
