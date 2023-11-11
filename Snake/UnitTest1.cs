@@ -18,19 +18,39 @@ public class Tests
     public void SnakeMovesForward()
     {
         var sut = new Snake();
-        
+
         sut.Move();
-        
+
         sut.X.Should().Be(1);
+    }
+
+    [Test]
+    public void SnakeTurnsLeft()
+    {
+        var sut = new Snake();
+
+        sut.TurnLeft();
+        sut.Move();
+
+        sut.X.Should().Be(0);
+        sut.Y.Should().Be(1);
     }
 }
 
 public class Snake
 {
     public int X { get; private set; }
-    
+    public int Y { get; private set; }
+    (int x, int y) Direction { get; set; } = (1, 0);
+
     public void Move()
     {
-        X++;
+        X += Direction.x;
+        Y += Direction.y;
+    }
+
+    public void TurnLeft()
+    {
+        Direction = (0, 1);
     }
 }
