@@ -131,7 +131,6 @@ public class Tests
     public void DieBy_EatingItself()
     {
         var sut = new Snake();
-        var doc = new SnakeGame(sut);
 
         sut.Grow();
         sut.Move();
@@ -154,7 +153,6 @@ public class Tests
     public void Grow_BeforeMoving()
     {
         var sut = new Snake() { Fruit = (1, 0) };
-        var doc = new SnakeGame(sut) { Fruit = (1, 0) };
 
         sut.Move();
 
