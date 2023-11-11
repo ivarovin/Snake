@@ -117,7 +117,7 @@ public class Tests
     {
         var sut = new SnakeGame() { Fruit = (1, 0) };
 
-        sut.Move();
+        sut.Tick();
 
         sut.Count().Should().Be(2);
     }
@@ -134,16 +134,16 @@ public class Tests
         var sut = new SnakeGame();
 
         sut.Grow();
-        sut.Move();
+        sut.Tick();
         sut.Grow();
         sut.TurnLeft();
-        sut.Move();
+        sut.Tick();
         sut.Grow();
         sut.TurnLeft();
         sut.Grow();
-        sut.Move();
+        sut.Tick();
         sut.TurnLeft();
-        sut.Move();
+        sut.Tick();
 
         sut.GameOver.Should().BeTrue();
     }
@@ -153,7 +153,7 @@ public class Tests
     {
         var sut = new SnakeGame() { Fruit = (1, 0) };
 
-        sut.Move();
+        sut.Tick();
 
         sut.Snake.First().Should().Be((1, 0));
         sut.ElementAt(1).Should().Be((0, 0));
@@ -184,7 +184,7 @@ public class Tests
     {
         var sut = new SnakeGame { Fruit = (1, 0) };
 
-        sut.Move();
+        sut.Tick();
 
         sut.Fruit.Should().NotBe((1, 0));
     }

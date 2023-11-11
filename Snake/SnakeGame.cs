@@ -9,21 +9,27 @@ public class SnakeGame : IEnumerable<(int x, int y)>
     (int x, int y) Direction { get; set; } = (1, 0);
     public bool GameOver { get; private set; }
 
-    public void Move()
+    public void Tick()
     {
         if (GameOver)
             throw new InvalidOperationException("Game Over");
-        
+
+        MoveSnake();
+    }
+
+    void MoveSnake()
+    {
         if (IsEatingItselfAt(NextPosition))
             GameOver = true;
-        if (Fruit == NextPosition)
-            EatFruit();
-
+        
+        EatFruitInFront();
         Drag();
     }
 
-    void EatFruit()
+    void EatFruitInFront()
     {
+        if (Fruit != NextPosition) return;
+
         Grow();
         CultivateNewFruit();
     }
