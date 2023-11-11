@@ -52,4 +52,11 @@ public class Snake : IEnumerable<(int x, int y)>
 
     public IEnumerator<(int x, int y)> GetEnumerator() => body.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public void Move(SnakeGame where)
+    {
+        Move();
+        if (where.Fruit == (X, Y))
+            Grow();
+    }
 }

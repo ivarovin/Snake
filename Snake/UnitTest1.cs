@@ -110,4 +110,14 @@ public class Tests
         sut.ElementAt(0).Should().Be((2, 0));
         sut.ElementAt(1).Should().Be((1, 0));
     }
+
+    [Test]
+    public void SnakeGrows_WhenEats_Fruit()
+    {
+        var sut = new Snake();
+
+        sut.Move(new SnakeGame(sut) { Fruit = (1, 0) });
+
+        sut.Length.Should().Be(1);
+    }
 }
