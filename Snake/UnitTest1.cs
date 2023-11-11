@@ -144,8 +144,6 @@ public class Tests
         sut.Move();
         sut.TurnLeft();
         sut.Move();
-        sut.TurnLeft();
-        sut.Move();
 
         sut.GameOver.Should().BeTrue();
     }

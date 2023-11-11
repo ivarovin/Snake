@@ -11,6 +11,9 @@ public class SnakeGame : IEnumerable<(int x, int y)>
 
     public void Move()
     {
+        if (GameOver)
+            throw new InvalidOperationException("Game Over");
+        
         if (IsEatingItselfAt(NextPosition))
             GameOver = true;
         if (Fruit == NextPosition)
