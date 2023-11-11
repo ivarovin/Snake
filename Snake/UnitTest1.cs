@@ -144,7 +144,10 @@ public class Tests
         sut.Tick();
         sut.TurnLeft();
         sut.Tick();
-
+        sut.Grow();
+        sut.TurnLeft();
+        sut.Tick();
+        
         sut.GameOver.Should().BeTrue();
     }
 
@@ -162,12 +165,12 @@ public class Tests
     [Test]
     public void Check_IfSnakeExists_AtPosition()
     {
-        new SnakeGame().IsEatingItselfAt((0, 0)).Should().BeTrue();
+        new SnakeGame().IsEatingItselfAt((0, 0)).Should().BeFalse();
         new SnakeGame().IsEatingItselfAt((1, 0)).Should().BeFalse();
     }
 
     [Test]
-    public void Check_IfSnakeBodyExists_AtPosition()
+    public void Snake_CannotEat_ItsOwnHead()
     {
         var sut = new SnakeGame();
         
@@ -176,7 +179,7 @@ public class Tests
         
         using var _ = new AssertionScope();
         sut.IsEatingItselfAt((0, 0)).Should().BeTrue();
-        sut.IsEatingItselfAt((1, 0)).Should().BeTrue();
+        sut.IsEatingItselfAt((1, 0)).Should().BeFalse();
     }
 
     [Test]

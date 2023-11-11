@@ -7,7 +7,7 @@ public class SnakeGame : IEnumerable<(int x, int y)>
     public (int x, int y) Fruit { get; set; }
     public List<(int x, int y)> Snake { get; private set; } = new() { (0, 0) };
     (int x, int y) Direction { get; set; } = (1, 0);
-    public bool GameOver => IsEatingItselfAt(NextPosition) || IsOutOfMap;
+    public bool GameOver => IsEatingItselfAt(Snake.First()) || IsOutOfMap;
     bool IsOutOfMap => Snake.Any(body => body.x > 10 || body.x < -10 || body.y > 10 || body.y < -10);
 
     public void Tick()
@@ -50,7 +50,8 @@ public class SnakeGame : IEnumerable<(int x, int y)>
         };
 
     public void Grow() => Snake.Add(Snake.First());
-    public bool IsEatingItselfAt((int x, int y) nextPosition) => Snake.Any(bodyPart => bodyPart == nextPosition);
+    public bool IsEatingItselfAt((int x, int y) nextPosition)
+        => Snake.Except(new []{Snake.First()}).Any(bodyPart => bodyPart == nextPosition);
     public IEnumerator<(int x, int y)> GetEnumerator() => Snake.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
