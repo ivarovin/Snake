@@ -1,3 +1,5 @@
+using FluentAssertions;
+
 namespace Snake;
 
 // 1.Head moves forward
@@ -13,8 +15,22 @@ namespace Snake;
 public class Tests
 {
     [Test]
-    public void Test1()
+    public void SnakeMovesForward()
     {
+        var sut = new Snake();
         
+        sut.Move();
+        
+        sut.X.Should().Be(1);
+    }
+}
+
+public class Snake
+{
+    public int X { get; private set; }
+    
+    public void Move()
+    {
+        X++;
     }
 }
