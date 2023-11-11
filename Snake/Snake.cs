@@ -19,8 +19,10 @@ public class Snake : IEnumerable<(int x, int y)>
         Drag();
     }
 
-    public void Drag() 
-        => body =  body.Select((part, index) => index == 0 ? NextPosition : body[index - 1]).ToList();
+    public void Drag() => body = body.Select((part, i) => InFrontOf(i)).ToList();
+
+    (int x, int y) InFrontOf(int bodyIndex)
+        => bodyIndex == 0 ? NextPosition : body[bodyIndex - 1];
 
     (int x, int y) NextPosition => (Head.x + Direction.x, Head.y + Direction.y);
     public void TurnLeft() => Direction = RightDirectionOf((Direction.x * -1, Direction.y * -1));
