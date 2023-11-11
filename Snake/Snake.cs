@@ -5,6 +5,7 @@ public class Snake
     public int X { get; private set; }
     public int Y { get; private set; }
     (int x, int y) Direction { get; set; } = (1, 0);
+    public int Length { get; set; }
 
     public void Move()
     {
@@ -24,4 +25,9 @@ public class Snake
             (0, 1) => (1, 0),
             _ => throw new Exception("Invalid direction")
         };
+
+    public void Grow()
+    {
+        Length++;
+    }
 }

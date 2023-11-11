@@ -75,8 +75,12 @@ public class Tests
     }
 
     [Test]
-    public void Eat_Fruit()
+    public void Grow()
     {
+        var sut = new Snake();
+
+        sut.Grow();
         
+        sut.Length.Should().Be(1);
     }
 }
