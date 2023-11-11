@@ -18,67 +18,67 @@ public class Tests
     [Test]
     public void SnakeMovesForward()
     {
-        var sut = new Snake();
+        var sut = new SnakeGame();
 
         sut.Drag();
 
-        sut.Head.x.Should().Be(1);
+        sut.Snake.First().x.Should().Be(1);
     }
 
     [Test]
     public void SnakeTurnsLeft()
     {
-        var sut = new Snake();
+        var sut = new SnakeGame();
 
         sut.TurnLeft();
         sut.Drag();
 
-        sut.Head.x.Should().Be(0);
-        sut.Head.y.Should().Be(1);
+        sut.Snake.First().x.Should().Be(0);
+        sut.Snake.First().y.Should().Be(1);
     }
 
     [Test]
     public void SnakeTurnsRight()
     {
-        var sut = new Snake();
+        var sut = new SnakeGame();
 
         sut.TurnRight();
         sut.Drag();
 
-        sut.Head.x.Should().Be(0);
-        sut.Head.y.Should().Be(-1);
+        sut.Snake.First().x.Should().Be(0);
+        sut.Snake.First().y.Should().Be(-1);
     }
 
     [Test]
     public void SnakeTurnsRightTwice()
     {
-        var sut = new Snake();
+        var sut = new SnakeGame();
 
         sut.TurnRight();
         sut.TurnRight();
         sut.Drag();
 
-        sut.Head.x.Should().Be(-1);
-        sut.Head.y.Should().Be(0);
+        sut.Snake.First().x.Should().Be(-1);
+        sut.Snake.First().y.Should().Be(0);
     }
 
     [Test]
     public void TurnLeftTwice()
     {
-        var sut = new Snake();
+        var sut = new SnakeGame();
 
         sut.TurnLeft();
         sut.TurnLeft();
         sut.Drag();
 
-        sut.Head.x.Should().Be(-1);
-        sut.Head.y.Should().Be(0);
+        sut.Snake.First().x.Should().Be(-1);
+        sut.Snake.First().y.Should().Be(0);
     }
 
     [Test]
     public void Grow()
     {
-        var sut = new Snake();
+        var sut = new SnakeGame();
 
         sut.Grow();
 
@@ -88,7 +88,7 @@ public class Tests
     [Test]
     public void Snake_BodyFollows_LastHeadPosition()
     {
-        var sut = new Snake();
+        var sut = new SnakeGame();
 
         sut.Grow();
         sut.Drag();
@@ -99,7 +99,7 @@ public class Tests
     [Test]
     public void Snake_Drags_ItsBody()
     {
-        var sut = new Snake();
+        var sut = new SnakeGame();
 
         sut.Grow();
         sut.Drag();
@@ -107,7 +107,7 @@ public class Tests
         sut.Drag();
         sut.Drag();
 
-        sut.Head.x.Should().Be(3);
+        sut.Snake.First().x.Should().Be(3);
         sut.ElementAt(1).Should().Be((2, 0));
         sut.ElementAt(2).Should().Be((1, 0));
     }
@@ -115,7 +115,7 @@ public class Tests
     [Test]
     public void SnakeGrows_WhenEats_Fruit()
     {
-        var sut = new Snake() { Fruit = (1, 0) };
+        var sut = new SnakeGame() { Fruit = (1, 0) };
 
         sut.Move();
 
@@ -125,13 +125,13 @@ public class Tests
     [Test]
     public void SnakeLength_IsOne_ByDefault()
     {
-        new Snake().Count().Should().Be(1);
+        new SnakeGame().Count().Should().Be(1);
     }
 
     [Test]
     public void DieBy_EatingItself()
     {
-        var sut = new Snake();
+        var sut = new SnakeGame();
 
         sut.Grow();
         sut.Move();
@@ -153,25 +153,25 @@ public class Tests
     [Test]
     public void Grow_BeforeMoving()
     {
-        var sut = new Snake() { Fruit = (1, 0) };
+        var sut = new SnakeGame() { Fruit = (1, 0) };
 
         sut.Move();
 
-        sut.Head.Should().Be((1, 0));
+        sut.Snake.First().Should().Be((1, 0));
         sut.ElementAt(1).Should().Be((0, 0));
     }
     
     [Test]
     public void Check_IfSnakeExists_AtPosition()
     {
-        new Snake().IsEatingItselfAt((0, 0)).Should().BeTrue();
-        new Snake().IsEatingItselfAt((1, 0)).Should().BeFalse();
+        new SnakeGame().IsEatingItselfAt((0, 0)).Should().BeTrue();
+        new SnakeGame().IsEatingItselfAt((1, 0)).Should().BeFalse();
     }
 
     [Test]
     public void Check_IfSnakeBodyExists_AtPosition()
     {
-        var sut = new Snake();
+        var sut = new SnakeGame();
         
         sut.Grow();
         sut.Drag();
@@ -184,7 +184,7 @@ public class Tests
     [Test]
     public void GrowFruit_InNewPosition_WhenEaten()
     {
-        var sut = new Snake { Fruit = (1, 0) };
+        var sut = new SnakeGame { Fruit = (1, 0) };
 
         sut.Move();
 
