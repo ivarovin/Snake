@@ -4,6 +4,7 @@ namespace Snake;
 
 public class Snake : IEnumerable<(int x, int y)>
 {
+    public (int x, int y) Fruit { get; set; }
     List<(int x, int y)> body = new() { (0, 0) };
     public (int x, int y) Head => body[0];
     (int x, int y) Direction { get; set; } = (1, 0);
@@ -13,7 +14,7 @@ public class Snake : IEnumerable<(int x, int y)>
     {
         if (IsEatingItselfAt(NextPosition))
             IsDead = true;
-        if (where.Fruit == NextPosition)
+        if (Fruit == NextPosition)
             Grow();
 
         Drag();

@@ -114,7 +114,7 @@ public class Tests
     [Test]
     public void SnakeGrows_WhenEats_Fruit()
     {
-        var sut = new Snake();
+        var sut = new Snake() { Fruit = (1, 0) };
 
         sut.Move(new SnakeGame(sut) { Fruit = (1, 0) });
 
@@ -153,7 +153,7 @@ public class Tests
     [Test]
     public void Grow_BeforeMoving()
     {
-        var sut = new Snake();
+        var sut = new Snake() { Fruit = (1, 0) };
         var doc = new SnakeGame(sut) { Fruit = (1, 0) };
 
         sut.Move(doc);
