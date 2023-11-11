@@ -81,7 +81,7 @@ public class Tests
 
         sut.Grow();
 
-        sut.Length.Should().Be(1);
+        sut.Length.Should().Be(2);
     }
 
     [Test]
@@ -92,7 +92,7 @@ public class Tests
         sut.Grow();
         sut.Move();
 
-        sut.ElementAt(0).Should().Be((0, 0));
+        sut.ElementAt(1).Should().Be((0, 0));
     }
 
     [Test]
@@ -107,8 +107,8 @@ public class Tests
         sut.Move();
 
         sut.X.Should().Be(3);
-        sut.ElementAt(0).Should().Be((2, 0));
-        sut.ElementAt(1).Should().Be((1, 0));
+        sut.ElementAt(1).Should().Be((2, 0));
+        sut.ElementAt(2).Should().Be((1, 0));
     }
 
     [Test]
@@ -118,13 +118,13 @@ public class Tests
 
         sut.Move(new SnakeGame(sut) { Fruit = (1, 0) });
 
-        sut.Length.Should().Be(1);
+        sut.Length.Should().Be(2);
     }
     
     [Test]
-    public void SnakeLength_IsZero_ByDefault()
+    public void SnakeLength_IsOne_ByDefault()
     {
-        new Snake().Length.Should().Be(0);
+        new Snake().Length.Should().Be(1);
     }
 
     [Test]
