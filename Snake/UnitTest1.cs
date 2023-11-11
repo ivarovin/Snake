@@ -188,4 +188,15 @@ public class Tests
 
         sut.Fruit.Should().NotBe((1, 0));
     }
+
+    [Test]
+    public void Die_WhenReach_Edge()
+    {
+        var sut = new SnakeGame();
+
+        for (var i = 0; i < 12; i++)
+            sut.Tick();
+
+        sut.GameOver.Should().BeTrue();
+    }
 }

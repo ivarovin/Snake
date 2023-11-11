@@ -7,6 +7,8 @@ public class SnakeGame : IEnumerable<(int x, int y)>
     public (int x, int y) Fruit { get; set; }
     public List<(int x, int y)> Snake { get; private set; } = new() { (0, 0) };
     (int x, int y) Direction { get; set; } = (1, 0);
+    bool IsOutOfMap 
+        => Snake.Any(bodyPart => bodyPart.x > 10 || bodyPart.x < -10 || bodyPart.y > 10 || bodyPart.y < -10);
     public bool GameOver { get; private set; }
 
     public void Tick()
@@ -19,13 +21,13 @@ public class SnakeGame : IEnumerable<(int x, int y)>
 
     void MoveSnake()
     {
-        if (IsEatingItselfAt(NextPosition))
+        if (IsEatingItselfAt(NextPosition) || IsOutOfMap)
             GameOver = true;
-        
+
         EatFruitInFront();
         Drag();
     }
-
+    
     void EatFruitInFront()
     {
         if (Fruit != NextPosition) return;
