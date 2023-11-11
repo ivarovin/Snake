@@ -150,6 +150,21 @@ public class Tests
         
         sut.GameOver.Should().BeTrue();
     }
+    
+    [Test]
+    public void GrowSnake_FromTail()
+    {
+        var sut = new SnakeGame();
+
+        for (var i = 0; i < 5; i++)
+        {
+            sut.Tick();
+            sut.Grow();
+        }
+        
+        sut.Snake.First().Should().Be((5, 0));
+        sut.Snake.Last().Should().Be((1, 0));
+    }
 
     [Test]
     public void Grow_BeforeMoving()
