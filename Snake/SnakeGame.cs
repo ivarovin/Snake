@@ -51,7 +51,7 @@ public class SnakeGame : IEnumerable<(int x, int y)>
 
     public void Grow() => Snake.Add(Snake.Last());
     public bool IsEatingItselfAt((int x, int y) nextPosition)
-        => Snake.Except(new []{Snake.First()}).Any(bodyPart => bodyPart == nextPosition);
+        => Snake.Skip(1).Any(bodyPart => bodyPart == nextPosition);
     public IEnumerator<(int x, int y)> GetEnumerator() => Snake.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

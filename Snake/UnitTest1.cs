@@ -133,20 +133,17 @@ public class Tests
     {
         var sut = new SnakeGame();
 
-        sut.Grow();
-        sut.Tick();
-        sut.Grow();
-        sut.TurnLeft();
-        sut.Tick();
-        sut.Grow();
-        sut.TurnLeft();
-        sut.Grow();
-        sut.Tick();
-        sut.TurnLeft();
-        sut.Tick();
-        sut.Grow();
-        sut.TurnLeft();
-        sut.Tick();
+        for (var i = 0; i < 5; i++)
+        {
+            sut.Fruit = (i + 1, 0);
+            sut.Tick();
+        }
+        
+        for (var i = 0; i < 3; i++)
+        {
+            sut.TurnLeft();
+            sut.Tick();
+        }
         
         sut.GameOver.Should().BeTrue();
     }
