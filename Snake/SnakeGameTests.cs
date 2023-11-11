@@ -25,8 +25,8 @@ public class SnakeGameTests
     [Test]
     public void Check_IfSnakeExists_AtPosition()
     {
-        new SnakeGame(new Snake()).ExistsSnakeAt((0, 0)).Should().BeTrue();
-        new SnakeGame(new Snake()).ExistsSnakeAt((1, 0)).Should().BeFalse();
+        new Snake().IsEatingItselfAt((0, 0)).Should().BeTrue();
+        new Snake().IsEatingItselfAt((1, 0)).Should().BeFalse();
     }
 
     [Test]

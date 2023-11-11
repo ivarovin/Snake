@@ -15,11 +15,5 @@ public class SnakeGame
         snake.Drag();
     }
 
-    public bool ExistsSnakeAt((int, int) cell)
-    {
-        if (snake.Any(bodyPart => bodyPart == cell))
-            return true;
-
-        return snake.Head.x == cell.Item1 && snake.Head.y == cell.Item2;
-    }
+    public bool ExistsSnakeAt((int, int) cell) => snake.IsEatingItselfAt(cell);
 }

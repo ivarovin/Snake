@@ -11,7 +11,7 @@ public class Snake : IEnumerable<(int x, int y)>
 
     public void Move(SnakeGame where)
     {
-        if (where.ExistsSnakeAt(NextPosition))
+        if (IsEatingItselfAt(NextPosition))
             IsDead = true;
         if (where.Fruit == NextPosition)
             Grow();
@@ -42,4 +42,6 @@ public class Snake : IEnumerable<(int x, int y)>
 
     public IEnumerator<(int x, int y)> GetEnumerator() => body.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public bool IsEatingItselfAt((int x, int y) nextPosition) => body.Any(bodyPart => bodyPart == nextPosition);
 }
