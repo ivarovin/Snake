@@ -1,14 +1,27 @@
+using System.Collections;
+
 namespace Snake;
 
-public class Snake
+public class Snake : IEnumerable<(int x, int y)>
 {
+    readonly List<(int x, int y)> body = new();
     public int X { get; private set; }
     public int Y { get; private set; }
     (int x, int y) Direction { get; set; } = (1, 0);
-    public int Length { get; set; }
+    public int Length => body.Count;
 
     public void Move()
     {
+        if (body.Count > 0)
+        {
+            for (var i = body.Count; i < 1; i--)
+            {
+                body[i] = body[i - 1];
+            }
+
+            body[0] = (X, Y);
+        }
+
         X += Direction.x;
         Y += Direction.y;
     }
@@ -28,6 +41,9 @@ public class Snake
 
     public void Grow()
     {
-        Length++;
+        body.Add((X, Y));
     }
+
+    public IEnumerator<(int x, int y)> GetEnumerator() => body.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

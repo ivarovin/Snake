@@ -80,7 +80,18 @@ public class Tests
         var sut = new Snake();
 
         sut.Grow();
-        
+
         sut.Length.Should().Be(1);
+    }
+
+    [Test]
+    public void Snake_BodyFollows_LastHeadPosition()
+    {
+        var sut = new Snake();
+
+        sut.Grow();
+        sut.Move();
+
+        sut.ElementAt(0).Should().Be((0, 0));
     }
 }
