@@ -3,10 +3,15 @@ namespace Snake;
 public class SnakeGame
 {
     public (int x, int y) Fruit { get; set; }
-    public readonly Snake Snake = new();
+    readonly Snake snake;
 
+    public SnakeGame(Snake snake)
+    {
+        this.snake = snake;
+    }
+    
     public void Tick()
     {
-        Snake.Move();
+        snake.Move();
     }
 }

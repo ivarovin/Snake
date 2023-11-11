@@ -73,4 +73,10 @@ public class Tests
         sut.X.Should().Be(-1);
         sut.Y.Should().Be(0);
     }
+
+    [Test]
+    public void Eat_Fruit()
+    {
+        
+    }
 }

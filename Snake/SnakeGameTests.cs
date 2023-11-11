@@ -7,16 +7,17 @@ public class SnakeGameTests
     [Test]
     public void Field_ContainFruit_ByDefault()
     {
-        new SnakeGame().Fruit.Should().NotBeNull();
+        new SnakeGame(new Snake()).Fruit.Should().NotBeNull();
     }
 
     [Test]
     public void Move_Snake()
     {
-        var sut = new SnakeGame();
+        var doc = new Snake();
+        var sut = new SnakeGame(doc);
 
         sut.Tick();
 
-        sut.Snake.X.Should().Be(1);
+        doc.X.Should().Be(1);
     }
 }
