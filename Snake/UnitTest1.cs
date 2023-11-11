@@ -93,14 +93,3 @@ public class FieldTests
         sut.Snake.X.Should().Be(1);
     }
 }
-
-public class SnakeGame
-{
-    public (int x, int y) Fruit { get; set; }
-    public readonly Snake Snake = new();
-
-    public void Tick()
-    {
-        Snake.Move();
-    }
-}
