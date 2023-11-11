@@ -147,7 +147,7 @@ public class Tests
         sut.TurnLeft();
         sut.Move();
 
-        sut.IsDead.Should().BeTrue();
+        sut.GameOver.Should().BeTrue();
     }
 
     [Test]

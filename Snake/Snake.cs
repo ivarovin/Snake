@@ -8,12 +8,12 @@ public class Snake : IEnumerable<(int x, int y)>
     List<(int x, int y)> body = new() { (0, 0) };
     public (int x, int y) Head => body[0];
     (int x, int y) Direction { get; set; } = (1, 0);
-    public bool IsDead { get; private set; }
+    public bool GameOver { get; private set; }
 
     public void Move()
     {
         if (IsEatingItselfAt(NextPosition))
-            IsDead = true;
+            GameOver = true;
         if (Fruit == NextPosition)
             EatFruit();
 
@@ -27,7 +27,6 @@ public class Snake : IEnumerable<(int x, int y)>
     }
 
     void CultivateNewFruit() => Fruit = (new Random().Next(-10, 10), new Random().Next(-10, 10));
-
     public void Drag() => body = body.Select((part, i) => InFrontOf(i)).ToList();
     (int x, int y) InFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : body[bodyIndex - 1];
     (int x, int y) NextPosition => (Head.x + Direction.x, Head.y + Direction.y);
