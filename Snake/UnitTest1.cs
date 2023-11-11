@@ -80,11 +80,27 @@ public class FieldTests
     [Test]
     public void Field_ContainFruit_ByDefault()
     {
-        new Field().Fruit.Should().NotBeNull();
+        new SnakeGame().Fruit.Should().NotBeNull();
+    }
+
+    [Test]
+    public void Move_Snake()
+    {
+        var sut = new SnakeGame();
+
+        sut.Tick();
+
+        sut.Snake.X.Should().Be(1);
     }
 }
 
-public class Field
+public class SnakeGame
 {
     public (int x, int y) Fruit { get; set; }
+    public readonly Snake Snake = new();
+
+    public void Tick()
+    {
+        Snake.Move();
+    }
 }
