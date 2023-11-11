@@ -60,6 +60,19 @@ public class Tests
         sut.X.Should().Be(-1);
         sut.Y.Should().Be(0);
     }
+    
+    [Test]
+    public void TurnLeftTwice()
+    {
+        var sut = new Snake();
+
+        sut.TurnLeft();
+        sut.TurnLeft();
+        sut.Move();
+
+        sut.X.Should().Be(-1);
+        sut.Y.Should().Be(0);
+    }
 }
 
 public class Snake
@@ -76,7 +89,14 @@ public class Snake
 
     public void TurnLeft()
     {
-        Direction = (0, 1);
+        Direction = Direction switch
+        {
+            (1, 0) => (0, 1),
+            (0, 1) => (-1, 0),
+            (-1, 0) => (0, -1),
+            (0, -1) => (1, 0),
+            _ => throw new Exception("Invalid direction")
+        };
     }
 
     public void TurnRight()
