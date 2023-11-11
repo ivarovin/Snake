@@ -20,4 +20,11 @@ public class SnakeGameTests
 
         doc.X.Should().Be(1);
     }
+
+    [Test]
+    public void Check_IfSnakeExists_AtPosition()
+    {
+        new SnakeGame(new Snake()).ExistsSnakeAt((0, 0)).Should().BeTrue();
+        new SnakeGame(new Snake()).ExistsSnakeAt((1, 0)).Should().BeFalse();
+    }
 }

@@ -14,4 +14,9 @@ public class SnakeGame
     {
         snake.Move();
     }
+
+    public bool ExistsSnakeAt((int, int) valueTuple)
+    {
+        return snake.X == valueTuple.Item1 && snake.Y == valueTuple.Item2;
+    }
 }
