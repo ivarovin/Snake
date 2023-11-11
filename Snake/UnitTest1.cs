@@ -120,4 +120,10 @@ public class Tests
 
         sut.Length.Should().Be(1);
     }
+    
+    [Test]
+    public void SnakeLength_IsZero_ByDefault()
+    {
+        new Snake().Length.Should().Be(0);
+    }
 }
