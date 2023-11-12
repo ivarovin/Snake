@@ -4,11 +4,12 @@ namespace Snake;
 
 public class SnakeGame : IEnumerable<(int x, int y)>
 {
+    const int MapSize = 10;
     public (int x, int y) Fruit { get; set; }
     public List<(int x, int y)> Snake { get; private set; } = new() { (0, 0) };
     (int x, int y) Direction { get; set; } = (1, 0);
     public bool GameOver => IsEatingItselfAt(Snake.First()) || IsOutOfMap;
-    bool IsOutOfMap => Snake.Any(body => body.x > 10 || body.x < -10 || body.y > 10 || body.y < -10);
+    bool IsOutOfMap => Snake.Any(body => body.x > MapSize || body.x < -MapSize || body.y > MapSize || body.y < -MapSize);
 
     public void Tick()
     {
@@ -24,12 +25,12 @@ public class SnakeGame : IEnumerable<(int x, int y)>
         if (Fruit != NextPosition) return;
 
         Grow();
-        CultivateNewFruit();
+        CultivateFruit();
     }
 
-    void CultivateNewFruit() => Fruit = (new Random().Next(-10, 10), new Random().Next(-10, 10));
-    public void MoveSnake() => Snake = Snake.Select((part, i) => InFrontOf(i)).ToList();
-    (int x, int y) InFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake[bodyIndex - 1];
+    void CultivateFruit() => Fruit = (new Random().Next(-MapSize, MapSize), new Random().Next(-MapSize, MapSize));
+    public void MoveSnake() => Snake = Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList();
+    (int x, int y) BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake[bodyIndex - 1];
     (int x, int y) NextPosition => (Snake.First().x + Direction.x, Snake.First().y + Direction.y);
     public void TurnLeft() => Direction = RightDirectionOf((Direction.x * -1, Direction.y * -1));
     public void TurnRight() => Direction = RightDirectionOf(Direction);
