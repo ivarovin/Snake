@@ -6,8 +6,7 @@ public class SnakeGame
     public (int x, int y) Fruit { get; set; }
     public List<(int x, int y)> Snake { get; private set; } = new() { (0, 0) };
     (int x, int y) Direction { get; set; } = (1, 0);
-    public bool GameOver => IsEatingItselfAt(Snake.First()) || IsOutOfMap;
-    bool IsOutOfMap => Snake.Any(IsOutsideMap);
+    public bool GameOver => IsEatingItselfAt(Snake.First()) || Snake.Any(IsOutsideMap);
 
     public void Tick()
     {
