@@ -8,6 +8,7 @@ public class SnakeGame
     public Coordinate Fruit { get; set; }
     public List<Coordinate> Snake { get; }
     Coordinate Direction { get; }
+    Coordinate NextPosition => Snake.First() + Direction;
     public bool GameOver => IsEatingItselfAt(Snake.First()) || Snake.Any(IsOutsideMap);
 
     SnakeGame(IEnumerable<Coordinate> snake, Coordinate fruit, Coordinate direction)
@@ -26,28 +27,25 @@ public class SnakeGame
     }
 
     SnakeGame EatFruitInFront()
-        => !Fruit.Equals(NextPosition)
-            ? this
-            : new SnakeGame(GrowSnake(), CultivateFruit(new RandomGardener(MapSize)), Direction);
+        => !Fruit.Equals(NextPosition) ? this : GrowSnake().Cultivate(new RandomGardener(MapSize));
 
-    public Coordinate CultivateFruit(Gardener gardener)
+    public SnakeGame Cultivate(Gardener gardener)
     {
         Coordinate result;
 
         do result = gardener.Cultivate();
         while (!CanCultivateAt(result));
 
-        return result;
+        return new SnakeGame(Snake, result, Direction);
     }
 
     public bool CanCultivateAt(Coordinate position) => !ExistsSnakeAt(position) && !IsOutsideMap(position);
     static bool IsOutsideMap(Coordinate position) => IsInsideMap(position, MapSize);
     public SnakeGame MoveSnake() => new(Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList(), Fruit, Direction);
     Coordinate BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake[bodyIndex - 1];
-    Coordinate NextPosition => Snake.First() + Direction;
     public SnakeGame TurnLeft() => new(Snake, Fruit, RightDirectionOf((Direction.X * -1, Direction.Y * -1)));
     public SnakeGame TurnRight() => new(Snake, Fruit, RightDirectionOf(Direction));
-    public IEnumerable<Coordinate> GrowSnake() => Snake.Append(Snake.Last());
+    public SnakeGame GrowSnake() => new(Snake.Append(Snake.Last()), Fruit, Direction);
     public bool IsEatingItselfAt(Coordinate position) => Snake.Skip(1).Any(bodyPart => bodyPart.Equals(position));
     bool ExistsSnakeAt(Coordinate position) => Snake.Any(body => body.Equals(position));
 

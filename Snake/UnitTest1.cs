@@ -53,7 +53,7 @@ public class Tests
     [Test]
     public void Grow()
     {
-        NewGame.GrowSnake().Count().Should().Be(2);
+        NewGame.GrowSnake().Snake.Count.Should().Be(2);
     }
 
     [Test]
@@ -183,7 +183,7 @@ public class Tests
     public void Fruit_IsNotCultivated_UntilPosition_IsValid()
     {
         NewGame
-            .CultivateFruit(new StubGardener((0, 0), (1, 0)))
-            .Should().Be((Coordinate)(1, 0));
+            .Cultivate(new StubGardener((0, 0), (1, 0)))
+            .Fruit.Should().Be((Coordinate)(1, 0));
     }
 }
