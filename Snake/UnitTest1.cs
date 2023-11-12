@@ -19,35 +19,35 @@ public class Tests
     [Test]
     public void SnakeMovesForward()
     {
-        NewGame.Tick().Snake.First().x.Should().Be(1);
+        NewGame.Tick().Snake.First().X.Should().Be(1);
     }
 
     [Test]
     public void SnakeTurnsLeft()
     {
-        NewGame.TurnLeft().MoveSnake().Snake.First().x.Should().Be(0);
-        NewGame.TurnLeft().MoveSnake().Snake.First().y.Should().Be(1);
+        NewGame.TurnLeft().MoveSnake().Snake.First().X.Should().Be(0);
+        NewGame.TurnLeft().MoveSnake().Snake.First().Y.Should().Be(1);
     }
 
     [Test]
     public void SnakeTurnsRight()
     {
-        NewGame.TurnRight().MoveSnake().Snake.First().x.Should().Be(0);
-        NewGame.TurnRight().MoveSnake().Snake.First().y.Should().Be(-1);
+        NewGame.TurnRight().MoveSnake().Snake.First().X.Should().Be(0);
+        NewGame.TurnRight().MoveSnake().Snake.First().Y.Should().Be(-1);
     }
 
     [Test]
     public void SnakeTurnsRightTwice()
     {
-        NewGame.TurnRight().TurnRight().MoveSnake().Snake.First().x.Should().Be(-1);
-        NewGame.TurnRight().TurnRight().MoveSnake().Snake.First().y.Should().Be(0);
+        NewGame.TurnRight().TurnRight().MoveSnake().Snake.First().X.Should().Be(-1);
+        NewGame.TurnRight().TurnRight().MoveSnake().Snake.First().Y.Should().Be(0);
     }
 
     [Test]
     public void TurnLeftTwice()
     {
-        NewGame.TurnLeft().TurnLeft().MoveSnake().Snake.First().x.Should().Be(-1);
-        NewGame.TurnLeft().TurnLeft().MoveSnake().Snake.First().y.Should().Be(0);
+        NewGame.TurnLeft().TurnLeft().MoveSnake().Snake.First().X.Should().Be(-1);
+        NewGame.TurnLeft().TurnLeft().MoveSnake().Snake.First().Y.Should().Be(0);
     }
 
     [Test]
@@ -59,7 +59,7 @@ public class Tests
     [Test]
     public void Snake_BodyFollows_LastHeadPosition()
     {
-        CreateWithFruitAt((1, 0)).Tick().Snake.ElementAt(1).Should().Be((0, 0));
+        CreateWithFruitAt((1, 0)).Tick().Snake.ElementAt(1).Should().Be((Coordinate)(0, 0));
     }
 
     [Test]
@@ -73,9 +73,9 @@ public class Tests
             sut = sut.Tick();
         }
 
-        sut.Snake.First().x.Should().Be(3);
-        sut.Snake.ElementAt(1).Should().Be((2, 0));
-        sut.Snake.ElementAt(2).Should().Be((1, 0));
+        sut.Snake.First().X.Should().Be(3);
+        sut.Snake.ElementAt(1).Should().Be((Coordinate)(2, 0));
+        sut.Snake.ElementAt(2).Should().Be((Coordinate)(1, 0));
     }
 
     [Test]
@@ -118,15 +118,15 @@ public class Tests
             sut = sut.Tick();
         }
 
-        sut.Snake.First().Should().Be((5, 0));
-        sut.Snake.Last().Should().Be((0, 0));
+        sut.Snake.First().Should().Be((Coordinate)(5, 0));
+        sut.Snake.Last().Should().Be((Coordinate)(0, 0));
     }
 
     [Test]
     public void Grow_BeforeMoving()
     {
-        CreateWithFruitAt((1, 0)).Tick().Snake.First().Should().Be((1, 0));
-        CreateWithFruitAt((1, 0)).Tick().Snake.ElementAt(1).Should().Be((0, 0));
+        CreateWithFruitAt((1, 0)).Tick().Snake.First().Should().Be((Coordinate)(1, 0));
+        CreateWithFruitAt((1, 0)).Tick().Snake.ElementAt(1).Should().Be((Coordinate)(0, 0));
     }
 
     [Test]
@@ -184,6 +184,6 @@ public class Tests
     {
         NewGame
             .CultivateFruit(new StubGardener((0, 0), (1, 0)))
-            .Should().Be((1, 0));
+            .Should().Be((Coordinate)(1, 0));
     }
 }
