@@ -21,5 +21,7 @@ public readonly struct Coordinate
             _ => throw new Exception("Invalid direction")
         };
     
+    public static bool IsInsideMap(Coordinate position, int mapSize)
+        => position.X > mapSize || position.X < -mapSize || position.Y > mapSize || position.Y < -mapSize;
     public static Coordinate Origin => (0, 0);
 }

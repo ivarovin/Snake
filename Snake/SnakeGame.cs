@@ -41,10 +41,7 @@ public class SnakeGame
     }
 
     public bool CanCultivateAt(Coordinate position) => !ExistsSnakeAt(position) && !IsOutsideMap(position);
-
-    static bool IsOutsideMap(Coordinate position)
-        => position.X > MapSize || position.X < -MapSize || position.Y > MapSize || position.Y < -MapSize;
-
+    static bool IsOutsideMap(Coordinate position) => IsInsideMap(position, MapSize);
     public SnakeGame MoveSnake() => new(Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList(), Fruit, Direction);
     Coordinate BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake[bodyIndex - 1];
     Coordinate NextPosition => Snake.First() + Direction;
@@ -53,6 +50,7 @@ public class SnakeGame
     public IEnumerable<Coordinate> GrowSnake() => Snake.Append(Snake.Last());
     public bool IsEatingItselfAt(Coordinate position) => Snake.Skip(1).Any(bodyPart => bodyPart.Equals(position));
     bool ExistsSnakeAt(Coordinate position) => Snake.Any(body => body.Equals(position));
+
     public static SnakeGame NewGame => new(new[] { Origin }, (0, 0), (1, 0));
     public static SnakeGame CreateWithFruitAt(Coordinate fruit) => new(new[] { Origin }, fruit, (1, 0));
 }
