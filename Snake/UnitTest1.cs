@@ -181,4 +181,10 @@ public class Tests
             .Cultivate(new StubGardener((0, 0), (1, 0)))
             .Fruit.Should().Be((Coordinate)(1, 0));
     }
+
+    [Test]
+    public void Undo_GameTick()
+    {
+        NewGame.Tick().Undo().Snake.First().Should().Be((Coordinate)(0, 0));
+    }
 }
