@@ -1,5 +1,6 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
+using static Snake.SnakeGame;
 
 namespace Snake;
 
@@ -18,17 +19,13 @@ public class Tests
     [Test]
     public void SnakeMovesForward()
     {
-        var sut = new SnakeGame();
-
-        sut.MoveSnake();
-
-        sut.Snake.First().x.Should().Be(1);
+        NewGame.Tick().Snake.First().x.Should().Be(1);
     }
 
     [Test]
     public void SnakeTurnsLeft()
     {
-        var sut = new SnakeGame();
+        var sut = NewGame;
 
         sut.TurnLeft();
         sut.MoveSnake();
@@ -40,7 +37,7 @@ public class Tests
     [Test]
     public void SnakeTurnsRight()
     {
-        var sut = new SnakeGame();
+        var sut = NewGame;
 
         sut.TurnRight();
         sut.MoveSnake();
@@ -52,7 +49,7 @@ public class Tests
     [Test]
     public void SnakeTurnsRightTwice()
     {
-        var sut = new SnakeGame();
+        var sut = NewGame;
 
         sut.TurnRight();
         sut.TurnRight();
@@ -65,7 +62,7 @@ public class Tests
     [Test]
     public void TurnLeftTwice()
     {
-        var sut = new SnakeGame();
+        var sut = NewGame;
 
         sut.TurnLeft();
         sut.TurnLeft();
@@ -78,35 +75,26 @@ public class Tests
     [Test]
     public void Grow()
     {
-        var sut = new SnakeGame();
-
-        sut.Grow();
-
-        sut.Snake.Count.Should().Be(2);
+        NewGame.GrowSnake().Count().Should().Be(2);
     }
 
     [Test]
     public void Snake_BodyFollows_LastHeadPosition()
     {
-        var sut = new SnakeGame();
-
-        sut.Grow();
-        sut.MoveSnake();
-
-        sut.Snake.ElementAt(1).Should().Be((0, 0));
+        CreateWithFruitAt((1,0)).Tick().Snake.ElementAt(1).Should().Be((0, 0));
     }
 
     [Test]
     public void Snake_Drags_ItsBody()
     {
-        var sut = new SnakeGame();
+        var sut = NewGame;
 
-        sut.Grow();
-        sut.MoveSnake();
-        sut.Grow();
-        sut.MoveSnake();
-        sut.MoveSnake();
-
+        for (var i = 0; i < 3; i++)
+        {
+            sut.Fruit = (i + 1, 0);
+            sut = sut.Tick();
+        }
+        
         sut.Snake.First().x.Should().Be(3);
         sut.Snake.ElementAt(1).Should().Be((2, 0));
         sut.Snake.ElementAt(2).Should().Be((1, 0));
@@ -115,23 +103,19 @@ public class Tests
     [Test]
     public void SnakeGrows_WhenEats_Fruit()
     {
-        var sut = new SnakeGame() { Fruit = (1, 0) };
-
-        sut.Tick();
-
-        sut.Snake.Count.Should().Be(2);
+        CreateWithFruitAt((1, 0)).Tick().Snake.Count.Should().Be(2);
     }
 
     [Test]
     public void SnakeLength_IsOne_ByDefault()
     {
-        new SnakeGame().Snake.Count.Should().Be(1);
+        NewGame.Snake.Count.Should().Be(1);
     }
 
     [Test]
     public void DieBy_EatingItself()
     {
-        var sut = new SnakeGame();
+        var sut = NewGame;
 
         for (var i = 0; i < 5; i++)
         {
@@ -151,12 +135,12 @@ public class Tests
     [Test]
     public void GrowSnake_FromTail()
     {
-        var sut = new SnakeGame();
+        var sut = NewGame;
 
         for (var i = 0; i < 5; i++)
         {
             sut.Fruit = (i + 1, 0);
-            sut.Tick();
+            sut = sut.Tick();
         }
 
         sut.Snake.First().Should().Be((5, 0));
@@ -166,51 +150,38 @@ public class Tests
     [Test]
     public void Grow_BeforeMoving()
     {
-        var sut = new SnakeGame() { Fruit = (1, 0) };
-
-        sut.Tick();
-
-        sut.Snake.First().Should().Be((1, 0));
-        sut.Snake.ElementAt(1).Should().Be((0, 0));
+        CreateWithFruitAt((1, 0)).Tick().Snake.First().Should().Be((1, 0));
+        CreateWithFruitAt((1, 0)).Tick().Snake.ElementAt(1).Should().Be((0, 0));
     }
 
     [Test]
     public void Check_IfSnakeExists_AtPosition()
     {
-        new SnakeGame().IsEatingItselfAt((0, 0)).Should().BeFalse();
-        new SnakeGame().IsEatingItselfAt((1, 0)).Should().BeFalse();
+        NewGame.IsEatingItselfAt((0, 0)).Should().BeFalse();
+        NewGame.IsEatingItselfAt((1, 0)).Should().BeFalse();
     }
 
     [Test]
     public void Snake_CannotEat_ItsOwnHead()
     {
-        var sut = new SnakeGame();
-
-        sut.Grow();
-        sut.MoveSnake();
-
         using var _ = new AssertionScope();
-        sut.IsEatingItselfAt((0, 0)).Should().BeTrue();
-        sut.IsEatingItselfAt((1, 0)).Should().BeFalse();
+        CreateWithFruitAt((1,0)).Tick().IsEatingItselfAt((0, 0)).Should().BeTrue();
+        CreateWithFruitAt((1,0)).Tick().IsEatingItselfAt((1, 0)).Should().BeFalse();
     }
 
     [Test]
     public void GrowFruit_InNewPosition_WhenEaten()
     {
-        var sut = new SnakeGame { Fruit = (1, 0) };
-
-        sut.Tick();
-
-        sut.Fruit.Should().NotBe((1, 0));
+        CreateWithFruitAt((1, 0)).Tick().Fruit.Should().NotBe((1, 0));
     }
 
     [Test]
     public void Die_WhenReach_Edge()
     {
-        var sut = new SnakeGame();
+        var sut = NewGame;
 
         for (var i = 0; i < 11; i++)
-            sut.Tick();
+            sut = sut.Tick();
 
         sut.GameOver.Should().BeTrue();
     }
@@ -218,22 +189,18 @@ public class Tests
     [Test]
     public void Fruit_CannotBeCultivated_AtSnakePosition()
     {
-        var sut = new SnakeGame(){Fruit = (1, 0)};
-        
-        sut.Tick();
-        
-        sut.CanCultivateAt((0, 0)).Should().BeFalse();
-        sut.CanCultivateAt((1, 0)).Should().BeFalse();
-        sut.CanCultivateAt((1, 1)).Should().BeTrue();
+        CreateWithFruitAt((1, 0)).Tick().CanCultivateAt((0, 0)).Should().BeFalse();
+        CreateWithFruitAt((1, 0)).Tick().CanCultivateAt((1, 0)).Should().BeFalse();
+        CreateWithFruitAt((1, 0)).Tick().CanCultivateAt((1, 1)).Should().BeTrue();
     }
 
     [Test]
     public void Fruit_CannotBeCultivated_OutsideMap()
     {
-        new SnakeGame().CanCultivateAt((11, 0)).Should().BeFalse();
-        new SnakeGame().CanCultivateAt((-11, 0)).Should().BeFalse();
-        new SnakeGame().CanCultivateAt((0, 11)).Should().BeFalse();
-        new SnakeGame().CanCultivateAt((0, -11)).Should().BeFalse();
-        new SnakeGame().CanCultivateAt((5, -5)).Should().BeTrue();
+        NewGame.CanCultivateAt((11, 0)).Should().BeFalse();
+        NewGame.CanCultivateAt((-11, 0)).Should().BeFalse();
+        NewGame.CanCultivateAt((0, 11)).Should().BeFalse();
+        NewGame.CanCultivateAt((0, -11)).Should().BeFalse();
+        NewGame.CanCultivateAt((5, -5)).Should().BeTrue();
     }
 }

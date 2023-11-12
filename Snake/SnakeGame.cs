@@ -4,33 +4,38 @@ public class SnakeGame
 {
     const int MapSize = 10;
     public (int x, int y) Fruit { get; set; }
-    public List<(int x, int y)> Snake { get; private set; } = new() { (0, 0) };
+    public List<(int x, int y)> Snake { get; } = new() { (0, 0) };
     (int x, int y) Direction { get; set; } = (1, 0);
     public bool GameOver => IsEatingItselfAt(Snake.First()) || Snake.Any(IsOutsideMap);
 
-    public void Tick()
+    SnakeGame(IEnumerable<(int x, int y)> snake, (int x, int y) fruit, (int x, int y) direction)
+    {
+        Snake = snake.ToList();
+        Fruit = fruit;
+        Direction = direction;
+    }
+
+    public SnakeGame Tick()
     {
         if (GameOver)
             throw new InvalidOperationException("Game Over");
 
-        EatFruitInFront();
-        MoveSnake();
+        return EatFruitInFront().MoveSnake();
     }
 
-    void EatFruitInFront()
-    {
-        if (Fruit != NextPosition) return;
+    SnakeGame EatFruitInFront()
+        => Fruit != NextPosition ? this : new SnakeGame(GrowSnake(), CultivateFruit(), Direction);
 
-        Grow();
-        CultivateFruit();
-    }
-
-    void CultivateFruit()
+    (int x, int y) CultivateFruit()
     {
+        (int, int) result;
+
         do
         {
-            Fruit = (new Random().Next(-MapSize, MapSize), new Random().Next(-MapSize, MapSize));
-        } while (CanCultivateAt(Fruit));
+            result = (new Random().Next(-MapSize, MapSize), new Random().Next(-MapSize, MapSize));
+        } while (CanCultivateAt(result));
+
+        return result;
     }
 
     public bool CanCultivateAt((int x, int y) position) => !ExistsSnakeAt(position) && !IsOutsideMap(position);
@@ -38,7 +43,7 @@ public class SnakeGame
     static bool IsOutsideMap((int x, int y) position)
         => position.x > MapSize || position.x < -MapSize || position.y > MapSize || position.y < -MapSize;
 
-    public void MoveSnake() => Snake = Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList();
+    public SnakeGame MoveSnake() => new(Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList(), Fruit, Direction);
     (int x, int y) BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake[bodyIndex - 1];
     (int x, int y) NextPosition => (Snake.First().x + Direction.x, Snake.First().y + Direction.y);
     public void TurnLeft() => Direction = RightDirectionOf((Direction.x * -1, Direction.y * -1));
@@ -54,11 +59,9 @@ public class SnakeGame
             _ => throw new Exception("Invalid direction")
         };
 
-    public void Grow() => Snake.Add(Snake.Last());
-
-    public bool IsEatingItselfAt((int x, int y) nextPosition)
-        => Snake.Skip(1).Any(bodyPart => bodyPart == nextPosition);
-
-    bool ExistsSnakeAt((int x, int y) nextPosition)
-        => Snake.Any(bodyPart => bodyPart == nextPosition);
+    public IEnumerable<(int x, int y)> GrowSnake() => Snake.Append(Snake.Last());
+    public bool IsEatingItselfAt((int x, int y) position) => Snake.Skip(1).Any(bodyPart => bodyPart == position);
+    bool ExistsSnakeAt((int x, int y) nextPosition) => Snake.Any(bodyPart => bodyPart == nextPosition);
+    public static SnakeGame NewGame => new(new[] { (0, 0) }, (0, 0), (1, 0));
+    public static SnakeGame CreateWithFruitAt((int x, int y) fruit) => new(new[] { (0, 0) }, fruit, (1, 0));
 }
