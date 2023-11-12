@@ -21,14 +21,7 @@ public class SnakeGame
         this.previous = previous;
     }
 
-    public SnakeGame Tick()
-    {
-        if (GameOver)
-            throw new InvalidOperationException("Game Over");
-
-        return EatFruitInFront().MoveSnake();
-    }
-
+    public SnakeGame Tick() => GameOver ? this : EatFruitInFront().MoveSnake();
     SnakeGame EatFruitInFront() => CanEat ? GrowSnake().Cultivate(new RandomGardener(MapSize)) : this;
 
     public SnakeGame Cultivate(Gardener gardener)
@@ -43,10 +36,7 @@ public class SnakeGame
 
     public bool CanCultivateAt(Coordinate position) => !ExistsSnakeAt(position) && !IsOutsideMap(position);
     static bool IsOutsideMap(Coordinate position) => IsInsideMap(position, MapSize);
-
-    public SnakeGame MoveSnake() =>
-        new(Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList(), Fruit, direction, this);
-
+    public SnakeGame MoveSnake() =>new(Snake.Select((part, i) => BodyPartInFrontOf(i)), Fruit, direction, this);
     Coordinate BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake.ElementAt(bodyIndex - 1);
     public SnakeGame TurnLeft() => new(Snake, Fruit, RightDirectionOf((direction.X * -1, direction.Y * -1)), this);
     public SnakeGame TurnRight() => new(Snake, Fruit, RightDirectionOf(direction), this);

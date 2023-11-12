@@ -16,7 +16,7 @@ while (game.CanUndo())
     Render(game);
 
     game = game.Undo();
-    await Task.Delay(500);
+    await Task.Delay(100);
 }
 
 return;
