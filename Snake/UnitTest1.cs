@@ -25,51 +25,29 @@ public class Tests
     [Test]
     public void SnakeTurnsLeft()
     {
-        var sut = NewGame;
-
-        sut.TurnLeft();
-        sut.MoveSnake();
-
-        sut.Snake.First().x.Should().Be(0);
-        sut.Snake.First().y.Should().Be(1);
+        NewGame.TurnLeft().MoveSnake().Snake.First().x.Should().Be(0);
+        NewGame.TurnLeft().MoveSnake().Snake.First().y.Should().Be(1);
     }
 
     [Test]
     public void SnakeTurnsRight()
     {
-        var sut = NewGame;
-
-        sut.TurnRight();
-        sut.MoveSnake();
-
-        sut.Snake.First().x.Should().Be(0);
-        sut.Snake.First().y.Should().Be(-1);
+        NewGame.TurnRight().MoveSnake().Snake.First().x.Should().Be(0);
+        NewGame.TurnRight().MoveSnake().Snake.First().y.Should().Be(-1);
     }
 
     [Test]
     public void SnakeTurnsRightTwice()
     {
-        var sut = NewGame;
-
-        sut.TurnRight();
-        sut.TurnRight();
-        sut.MoveSnake();
-
-        sut.Snake.First().x.Should().Be(-1);
-        sut.Snake.First().y.Should().Be(0);
+        NewGame.TurnRight().TurnRight().MoveSnake().Snake.First().x.Should().Be(-1);
+        NewGame.TurnRight().TurnRight().MoveSnake().Snake.First().y.Should().Be(0);
     }
 
     [Test]
     public void TurnLeftTwice()
     {
-        var sut = NewGame;
-
-        sut.TurnLeft();
-        sut.TurnLeft();
-        sut.MoveSnake();
-
-        sut.Snake.First().x.Should().Be(-1);
-        sut.Snake.First().y.Should().Be(0);
+        NewGame.TurnLeft().TurnLeft().MoveSnake().Snake.First().x.Should().Be(-1);
+        NewGame.TurnLeft().TurnLeft().MoveSnake().Snake.First().y.Should().Be(0);
     }
 
     [Test]
@@ -120,14 +98,11 @@ public class Tests
         for (var i = 0; i < 5; i++)
         {
             sut.Fruit = (i + 1, 0);
-            sut.Tick();
+            sut = sut.Tick();
         }
 
-        for (var i = 0; i < 3; i++)
-        {
-            sut.TurnLeft();
-            sut.Tick();
-        }
+        for (var i = 0; i < 3; i++) 
+            sut = sut.TurnLeft().Tick();
 
         sut.GameOver.Should().BeTrue();
     }

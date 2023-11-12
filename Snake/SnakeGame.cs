@@ -5,7 +5,7 @@ public class SnakeGame
     const int MapSize = 10;
     public (int x, int y) Fruit { get; set; }
     public List<(int x, int y)> Snake { get; } = new() { (0, 0) };
-    (int x, int y) Direction { get; set; } = (1, 0);
+    (int x, int y) Direction { get; } = (1, 0);
     public bool GameOver => IsEatingItselfAt(Snake.First()) || Snake.Any(IsOutsideMap);
 
     SnakeGame(IEnumerable<(int x, int y)> snake, (int x, int y) fruit, (int x, int y) direction)
@@ -46,9 +46,8 @@ public class SnakeGame
     public SnakeGame MoveSnake() => new(Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList(), Fruit, Direction);
     (int x, int y) BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake[bodyIndex - 1];
     (int x, int y) NextPosition => (Snake.First().x + Direction.x, Snake.First().y + Direction.y);
-    public void TurnLeft() => Direction = RightDirectionOf((Direction.x * -1, Direction.y * -1));
-    public void TurnRight() => Direction = RightDirectionOf(Direction);
-
+    public SnakeGame TurnLeft() => new(Snake, Fruit, RightDirectionOf((Direction.x * -1, Direction.y * -1)));
+    public SnakeGame TurnRight() => new(Snake, Fruit, RightDirectionOf(Direction));
     static (int x, int y) RightDirectionOf((int x, int y) direction)
         => direction switch
         {
