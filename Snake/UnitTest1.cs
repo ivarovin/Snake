@@ -218,6 +218,11 @@ public class Tests
     [Test]
     public void Fruit_CannotBeCultivated_AtSnakePosition()
     {
-        new SnakeGame().CanCultivateAt((0, 0)).Should().BeFalse();
+        var sut = new SnakeGame(){Fruit = (1, 0)};
+        
+        sut.Tick();
+        
+        sut.CanCultivateAt((0, 0)).Should().BeFalse();
+        sut.CanCultivateAt((1, 0)).Should().BeFalse();
     }
 }
