@@ -7,6 +7,13 @@ while (!game.GameOver)
 {
     Render(game);
 
+    game = Console.ReadLine() switch
+    {
+        "d" => game.TurnRight(),
+        "a" => game.TurnLeft(),
+        _ => game
+    };
+
     game = game.Tick();
     await Task.Delay(500);
 }
@@ -25,9 +32,9 @@ void Render(SnakeGame snakeGame)
 {
     Console.Clear();
 
-    for (var y = 0; y < 10; y++)
+    for (var y = -10; y < 10; y++)
     {
-        for (var x = 0; x < 10; x++)
+        for (var x = -10; x < 10; x++)
         {
             if (snakeGame.Fruit.Equals((Coordinate)(x, y)))
             {
