@@ -9,11 +9,12 @@ public class SnakeGame
     public readonly IReadOnlyCollection<Coordinate> Snake;
     readonly Coordinate direction;
     Coordinate NextPosition => Snake.First() + direction;
+    bool CanEat => Fruit.Equals(NextPosition);
     public bool GameOver => IsEatingItselfAt(Snake.First()) || Snake.Any(IsOutsideMap);
 
     SnakeGame(IEnumerable<Coordinate> snake, Coordinate fruit, Coordinate direction)
     {
-        this.Snake = snake.ToList();
+        Snake = snake.ToList();
         Fruit = fruit;
         this.direction = direction;
     }
@@ -26,9 +27,7 @@ public class SnakeGame
         return EatFruitInFront().MoveSnake();
     }
 
-    SnakeGame EatFruitInFront()
-        => !Fruit.Equals(NextPosition) ? this : GrowSnake().Cultivate(new RandomGardener(MapSize));
-
+    SnakeGame EatFruitInFront() => CanEat ? GrowSnake().Cultivate(new RandomGardener(MapSize)) : this;
     public SnakeGame Cultivate(Gardener gardener)
     {
         Coordinate result;
