@@ -4,8 +4,8 @@ public class SnakeGame
 {
     const int MapSize = 10;
     public (int x, int y) Fruit { get; set; }
-    public List<(int x, int y)> Snake { get; } = new() { (0, 0) };
-    (int x, int y) Direction { get; } = (1, 0);
+    public List<(int x, int y)> Snake { get; }
+    (int x, int y) Direction { get; }
     public bool GameOver => IsEatingItselfAt(Snake.First()) || Snake.Any(IsOutsideMap);
 
     SnakeGame(IEnumerable<(int x, int y)> snake, (int x, int y) fruit, (int x, int y) direction)
@@ -24,16 +24,14 @@ public class SnakeGame
     }
 
     SnakeGame EatFruitInFront()
-        => Fruit != NextPosition ? this : new SnakeGame(GrowSnake(), CultivateFruit(), Direction);
+        => Fruit != NextPosition ? this : new SnakeGame(GrowSnake(), CultivateFruit(new RandomGardener(MapSize)), Direction);
 
-    (int x, int y) CultivateFruit()
+   public (int x, int y) CultivateFruit(Gardener gardener)
     {
-        (int, int) result;
+        (int x, int y) result;
 
-        do
-        {
-            result = (new Random().Next(-MapSize, MapSize), new Random().Next(-MapSize, MapSize));
-        } while (CanCultivateAt(result));
+        do result = gardener.Cultivate();
+        while (CanCultivateAt(result));
 
         return result;
     }
@@ -60,7 +58,7 @@ public class SnakeGame
 
     public IEnumerable<(int x, int y)> GrowSnake() => Snake.Append(Snake.Last());
     public bool IsEatingItselfAt((int x, int y) position) => Snake.Skip(1).Any(bodyPart => bodyPart == position);
-    bool ExistsSnakeAt((int x, int y) nextPosition) => Snake.Any(bodyPart => bodyPart == nextPosition);
+    bool ExistsSnakeAt((int x, int y) position) => Snake.Any(body => body == position);
     public static SnakeGame NewGame => new(new[] { (0, 0) }, (0, 0), (1, 0));
     public static SnakeGame CreateWithFruitAt((int x, int y) fruit) => new(new[] { (0, 0) }, fruit, (1, 0));
 }
