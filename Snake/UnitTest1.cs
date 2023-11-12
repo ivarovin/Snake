@@ -224,5 +224,16 @@ public class Tests
         
         sut.CanCultivateAt((0, 0)).Should().BeFalse();
         sut.CanCultivateAt((1, 0)).Should().BeFalse();
+        sut.CanCultivateAt((1, 1)).Should().BeTrue();
+    }
+
+    [Test]
+    public void Fruit_CannotBeCultivated_OutsideMap()
+    {
+        new SnakeGame().CanCultivateAt((11, 0)).Should().BeFalse();
+        new SnakeGame().CanCultivateAt((-11, 0)).Should().BeFalse();
+        new SnakeGame().CanCultivateAt((0, 11)).Should().BeFalse();
+        new SnakeGame().CanCultivateAt((0, -11)).Should().BeFalse();
+        new SnakeGame().CanCultivateAt((5, -5)).Should().BeTrue();
     }
 }

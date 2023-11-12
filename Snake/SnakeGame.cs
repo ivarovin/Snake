@@ -7,9 +7,7 @@ public class SnakeGame
     public List<(int x, int y)> Snake { get; private set; } = new() { (0, 0) };
     (int x, int y) Direction { get; set; } = (1, 0);
     public bool GameOver => IsEatingItselfAt(Snake.First()) || IsOutOfMap;
-
-    bool IsOutOfMap =>
-        Snake.Any(body => body.x > MapSize || body.x < -MapSize || body.y > MapSize || body.y < -MapSize);
+    bool IsOutOfMap => Snake.Any(IsOutsideMap);
 
     public void Tick()
     {
@@ -29,7 +27,11 @@ public class SnakeGame
     }
 
     void CultivateFruit() => Fruit = (new Random().Next(-MapSize, MapSize), new Random().Next(-MapSize, MapSize));
-    public bool CanCultivateAt((int x, int y) position) => !ExistsSnakeAt(position);
+    public bool CanCultivateAt((int x, int y) position) => !ExistsSnakeAt(position) && !IsOutsideMap(position);
+
+    bool IsOutsideMap((int x, int y) position)
+        => position.x > MapSize || position.x < -MapSize || position.y > MapSize || position.y < -MapSize;
+
     public void MoveSnake() => Snake = Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList();
     (int x, int y) BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake[bodyIndex - 1];
     (int x, int y) NextPosition => (Snake.First().x + Direction.x, Snake.First().y + Direction.y);
