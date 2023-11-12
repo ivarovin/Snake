@@ -20,7 +20,7 @@ public class Tests
     {
         var sut = new SnakeGame();
 
-        sut.Drag();
+        sut.MoveSnake();
 
         sut.Snake.First().x.Should().Be(1);
     }
@@ -31,7 +31,7 @@ public class Tests
         var sut = new SnakeGame();
 
         sut.TurnLeft();
-        sut.Drag();
+        sut.MoveSnake();
 
         sut.Snake.First().x.Should().Be(0);
         sut.Snake.First().y.Should().Be(1);
@@ -43,7 +43,7 @@ public class Tests
         var sut = new SnakeGame();
 
         sut.TurnRight();
-        sut.Drag();
+        sut.MoveSnake();
 
         sut.Snake.First().x.Should().Be(0);
         sut.Snake.First().y.Should().Be(-1);
@@ -56,7 +56,7 @@ public class Tests
 
         sut.TurnRight();
         sut.TurnRight();
-        sut.Drag();
+        sut.MoveSnake();
 
         sut.Snake.First().x.Should().Be(-1);
         sut.Snake.First().y.Should().Be(0);
@@ -69,7 +69,7 @@ public class Tests
 
         sut.TurnLeft();
         sut.TurnLeft();
-        sut.Drag();
+        sut.MoveSnake();
 
         sut.Snake.First().x.Should().Be(-1);
         sut.Snake.First().y.Should().Be(0);
@@ -91,7 +91,7 @@ public class Tests
         var sut = new SnakeGame();
 
         sut.Grow();
-        sut.Drag();
+        sut.MoveSnake();
 
         sut.ElementAt(1).Should().Be((0, 0));
     }
@@ -102,10 +102,10 @@ public class Tests
         var sut = new SnakeGame();
 
         sut.Grow();
-        sut.Drag();
+        sut.MoveSnake();
         sut.Grow();
-        sut.Drag();
-        sut.Drag();
+        sut.MoveSnake();
+        sut.MoveSnake();
 
         sut.Snake.First().x.Should().Be(3);
         sut.ElementAt(1).Should().Be((2, 0));
@@ -187,7 +187,7 @@ public class Tests
         var sut = new SnakeGame();
 
         sut.Grow();
-        sut.Drag();
+        sut.MoveSnake();
 
         using var _ = new AssertionScope();
         sut.IsEatingItselfAt((0, 0)).Should().BeTrue();

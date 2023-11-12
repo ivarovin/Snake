@@ -15,13 +15,8 @@ public class SnakeGame : IEnumerable<(int x, int y)>
         if (GameOver)
             throw new InvalidOperationException("Game Over");
 
-        MoveSnake();
-    }
-
-    void MoveSnake()
-    {
         EatFruitInFront();
-        Drag();
+        MoveSnake();
     }
 
     void EatFruitInFront()
@@ -33,7 +28,7 @@ public class SnakeGame : IEnumerable<(int x, int y)>
     }
 
     void CultivateNewFruit() => Fruit = (new Random().Next(-10, 10), new Random().Next(-10, 10));
-    public void Drag() => Snake = Snake.Select((part, i) => InFrontOf(i)).ToList();
+    public void MoveSnake() => Snake = Snake.Select((part, i) => InFrontOf(i)).ToList();
     (int x, int y) InFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake[bodyIndex - 1];
     (int x, int y) NextPosition => (Snake.First().x + Direction.x, Snake.First().y + Direction.y);
     public void TurnLeft() => Direction = RightDirectionOf((Direction.x * -1, Direction.y * -1));
