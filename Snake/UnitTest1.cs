@@ -69,8 +69,7 @@ public class Tests
 
         for (var i = 0; i < 3; i++)
         {
-            sut.Fruit = (i + 1, 0);
-            sut = sut.Tick();
+            sut = sut.Cultivate(new StubGardener((i + 1, 0))).Tick();
         }
 
         sut.Snake.First().X.Should().Be(3);
@@ -95,11 +94,8 @@ public class Tests
     {
         var sut = NewGame;
 
-        for (var i = 0; i < 5; i++)
-        {
-            sut.Fruit = (i + 1, 0);
-            sut = sut.Tick();
-        }
+        for (var i = 0; i < 5; i++) 
+            sut = sut.Cultivate(new StubGardener((i + 1, 0))).Tick();
 
         for (var i = 0; i < 3; i++)
             sut = sut.TurnLeft().Tick();
@@ -114,8 +110,7 @@ public class Tests
 
         for (var i = 0; i < 5; i++)
         {
-            sut.Fruit = (i + 1, 0);
-            sut = sut.Tick();
+            sut = sut.Cultivate(new StubGardener((i + 1, 0))).Tick();
         }
 
         sut.Snake.First().Should().Be((Coordinate)(5, 0));

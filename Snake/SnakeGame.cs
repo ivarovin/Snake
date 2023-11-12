@@ -5,17 +5,17 @@ namespace Snake;
 public class SnakeGame
 {
     const int MapSize = 10;
-    public Coordinate Fruit { get; set; }
-    public IReadOnlyCollection<Coordinate> Snake { get; }
-    Coordinate Direction { get; }
-    Coordinate NextPosition => Snake.First() + Direction;
+    public readonly Coordinate Fruit;
+    public readonly IReadOnlyCollection<Coordinate> Snake;
+    readonly Coordinate direction;
+    Coordinate NextPosition => Snake.First() + direction;
     public bool GameOver => IsEatingItselfAt(Snake.First()) || Snake.Any(IsOutsideMap);
 
     SnakeGame(IEnumerable<Coordinate> snake, Coordinate fruit, Coordinate direction)
     {
-        Snake = snake.ToList();
+        this.Snake = snake.ToList();
         Fruit = fruit;
-        Direction = direction;
+        this.direction = direction;
     }
 
     public SnakeGame Tick()
@@ -36,16 +36,16 @@ public class SnakeGame
         do result = gardener.Cultivate();
         while (!CanCultivateAt(result));
 
-        return new SnakeGame(Snake, result, Direction);
+        return new SnakeGame(Snake, result, direction);
     }
 
     public bool CanCultivateAt(Coordinate position) => !ExistsSnakeAt(position) && !IsOutsideMap(position);
     static bool IsOutsideMap(Coordinate position) => IsInsideMap(position, MapSize);
-    public SnakeGame MoveSnake() => new(Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList(), Fruit, Direction);
+    public SnakeGame MoveSnake() => new(Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList(), Fruit, direction);
     Coordinate BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake.ElementAt(bodyIndex - 1);
-    public SnakeGame TurnLeft() => new(Snake, Fruit, RightDirectionOf((Direction.X * -1, Direction.Y * -1)));
-    public SnakeGame TurnRight() => new(Snake, Fruit, RightDirectionOf(Direction));
-    public SnakeGame GrowSnake() => new(Snake.Append(Snake.Last()), Fruit, Direction);
+    public SnakeGame TurnLeft() => new(Snake, Fruit, RightDirectionOf((direction.X * -1, direction.Y * -1)));
+    public SnakeGame TurnRight() => new(Snake, Fruit, RightDirectionOf(direction));
+    public SnakeGame GrowSnake() => new(Snake.Append(Snake.Last()), Fruit, direction);
     public bool IsEatingItselfAt(Coordinate position) => Snake.Skip(1).Any(bodyPart => bodyPart.Equals(position));
     bool ExistsSnakeAt(Coordinate position) => Snake.Any(body => body.Equals(position));
 
