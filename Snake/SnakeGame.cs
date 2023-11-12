@@ -6,7 +6,7 @@ public class SnakeGame
 {
     const int MapSize = 10;
     public Coordinate Fruit { get; set; }
-    public List<Coordinate> Snake { get; }
+    public IReadOnlyCollection<Coordinate> Snake { get; }
     Coordinate Direction { get; }
     Coordinate NextPosition => Snake.First() + Direction;
     public bool GameOver => IsEatingItselfAt(Snake.First()) || Snake.Any(IsOutsideMap);
@@ -42,7 +42,7 @@ public class SnakeGame
     public bool CanCultivateAt(Coordinate position) => !ExistsSnakeAt(position) && !IsOutsideMap(position);
     static bool IsOutsideMap(Coordinate position) => IsInsideMap(position, MapSize);
     public SnakeGame MoveSnake() => new(Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList(), Fruit, Direction);
-    Coordinate BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake[bodyIndex - 1];
+    Coordinate BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake.ElementAt(bodyIndex - 1);
     public SnakeGame TurnLeft() => new(Snake, Fruit, RightDirectionOf((Direction.X * -1, Direction.Y * -1)));
     public SnakeGame TurnRight() => new(Snake, Fruit, RightDirectionOf(Direction));
     public SnakeGame GrowSnake() => new(Snake.Append(Snake.Last()), Fruit, Direction);
