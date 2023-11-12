@@ -27,6 +27,7 @@ public class SnakeGame
     }
 
     void CultivateFruit() => Fruit = (new Random().Next(-MapSize, MapSize), new Random().Next(-MapSize, MapSize));
+    public bool CanCultivateAt((int x, int y) position) => IsEatingItselfAt(position);
     public void MoveSnake() => Snake = Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList();
     (int x, int y) BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake[bodyIndex - 1];
     (int x, int y) NextPosition => (Snake.First().x + Direction.x, Snake.First().y + Direction.y);

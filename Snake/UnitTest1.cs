@@ -214,4 +214,10 @@ public class Tests
 
         sut.GameOver.Should().BeTrue();
     }
+
+    [Test]
+    public void Fruit_CannotBeCultivated_AtSnakePosition()
+    {
+        new SnakeGame().CanCultivateAt((0, 0)).Should().BeFalse();
+    }
 }
