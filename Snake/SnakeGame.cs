@@ -25,10 +25,17 @@ public class SnakeGame
         CultivateFruit();
     }
 
-    void CultivateFruit() => Fruit = (new Random().Next(-MapSize, MapSize), new Random().Next(-MapSize, MapSize));
+    void CultivateFruit()
+    {
+        do
+        {
+            Fruit = (new Random().Next(-MapSize, MapSize), new Random().Next(-MapSize, MapSize));
+        } while (CanCultivateAt(Fruit));
+    }
+
     public bool CanCultivateAt((int x, int y) position) => !ExistsSnakeAt(position) && !IsOutsideMap(position);
 
-    bool IsOutsideMap((int x, int y) position)
+    static bool IsOutsideMap((int x, int y) position)
         => position.x > MapSize || position.x < -MapSize || position.y > MapSize || position.y < -MapSize;
 
     public void MoveSnake() => Snake = Snake.Select((part, i) => BodyPartInFrontOf(i)).ToList();
