@@ -49,7 +49,7 @@ public class SnakeGame
     public SnakeGame GrowSnake() => new(Snake.Append(Snake.Last()), Fruit, direction, this);
     public bool IsEatingItselfAt(Coordinate position) => Snake.Skip(1).Any(bodyPart => bodyPart.Equals(position));
     bool ExistsSnakeAt(Coordinate position) => Snake.Any(body => body.Equals(position));
-    public SnakeGame Undo() => previous;
+    public SnakeGame Undo() => previous ?? this;
 
     public static SnakeGame NewGame => new(new[] { Origin }, (0, 0), (1, 0), null);
     public static SnakeGame CreateWithFruitAt(Coordinate fruit) => new(new[] { Origin }, fruit, (1, 0), null);

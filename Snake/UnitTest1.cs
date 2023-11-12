@@ -187,4 +187,10 @@ public class Tests
     {
         NewGame.Tick().Undo().Snake.First().Should().Be((Coordinate)(0, 0));
     }
+
+    [Test]
+    public void Undo_NewGame_ReturnsCurrentGame()
+    {
+        NewGame.Undo().Should().NotBeNull();
+    }
 }
