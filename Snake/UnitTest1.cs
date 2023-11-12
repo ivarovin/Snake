@@ -138,16 +138,16 @@ public class Tests
             sut.Fruit = (i + 1, 0);
             sut.Tick();
         }
-        
+
         for (var i = 0; i < 3; i++)
         {
             sut.TurnLeft();
             sut.Tick();
         }
-        
+
         sut.GameOver.Should().BeTrue();
     }
-    
+
     [Test]
     public void GrowSnake_FromTail()
     {
@@ -155,12 +155,12 @@ public class Tests
 
         for (var i = 0; i < 5; i++)
         {
+            sut.Fruit = (i + 1, 0);
             sut.Tick();
-            sut.Grow();
         }
-        
+
         sut.Snake.First().Should().Be((5, 0));
-        sut.Snake.Last().Should().Be((1, 0));
+        sut.Snake.Last().Should().Be((0, 0));
     }
 
     [Test]
@@ -173,7 +173,7 @@ public class Tests
         sut.Snake.First().Should().Be((1, 0));
         sut.ElementAt(1).Should().Be((0, 0));
     }
-    
+
     [Test]
     public void Check_IfSnakeExists_AtPosition()
     {
@@ -185,10 +185,10 @@ public class Tests
     public void Snake_CannotEat_ItsOwnHead()
     {
         var sut = new SnakeGame();
-        
+
         sut.Grow();
         sut.Drag();
-        
+
         using var _ = new AssertionScope();
         sut.IsEatingItselfAt((0, 0)).Should().BeTrue();
         sut.IsEatingItselfAt((1, 0)).Should().BeFalse();
