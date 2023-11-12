@@ -59,7 +59,7 @@ public class Tests
     [Test]
     public void Snake_BodyFollows_LastHeadPosition()
     {
-        CreateWithFruitAt((1,0)).Tick().Snake.ElementAt(1).Should().Be((0, 0));
+        CreateWithFruitAt((1, 0)).Tick().Snake.ElementAt(1).Should().Be((0, 0));
     }
 
     [Test]
@@ -72,7 +72,7 @@ public class Tests
             sut.Fruit = (i + 1, 0);
             sut = sut.Tick();
         }
-        
+
         sut.Snake.First().x.Should().Be(3);
         sut.Snake.ElementAt(1).Should().Be((2, 0));
         sut.Snake.ElementAt(2).Should().Be((1, 0));
@@ -101,7 +101,7 @@ public class Tests
             sut = sut.Tick();
         }
 
-        for (var i = 0; i < 3; i++) 
+        for (var i = 0; i < 3; i++)
             sut = sut.TurnLeft().Tick();
 
         sut.GameOver.Should().BeTrue();
@@ -140,8 +140,8 @@ public class Tests
     public void Snake_CannotEat_ItsOwnHead()
     {
         using var _ = new AssertionScope();
-        CreateWithFruitAt((1,0)).Tick().IsEatingItselfAt((0, 0)).Should().BeTrue();
-        CreateWithFruitAt((1,0)).Tick().IsEatingItselfAt((1, 0)).Should().BeFalse();
+        CreateWithFruitAt((1, 0)).Tick().IsEatingItselfAt((0, 0)).Should().BeTrue();
+        CreateWithFruitAt((1, 0)).Tick().IsEatingItselfAt((1, 0)).Should().BeFalse();
     }
 
     [Test]
@@ -177,5 +177,13 @@ public class Tests
         NewGame.CanCultivateAt((0, 11)).Should().BeFalse();
         NewGame.CanCultivateAt((0, -11)).Should().BeFalse();
         NewGame.CanCultivateAt((5, -5)).Should().BeTrue();
+    }
+
+    [Test]
+    public void Fruit_IsNotCultivated_UntilPosition_IsValid()
+    {
+        NewGame
+            .CultivateFruit(new StubGardener((0, 0), (1, 0)))
+            .Should().Be((1, 0));
     }
 }

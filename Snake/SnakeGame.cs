@@ -31,7 +31,7 @@ public class SnakeGame
         (int x, int y) result;
 
         do result = gardener.Cultivate();
-        while (CanCultivateAt(result));
+        while (!CanCultivateAt(result));
 
         return result;
     }
