@@ -1,5 +1,5 @@
-using Snake;
-using static Snake.SnakeGame;
+using SnakeDomain;
+using static SnakeGame;
 
 var game = CreateWithFruitAt((5, 0));
 
@@ -32,9 +32,9 @@ void Render(SnakeGame snakeGame)
 {
     Console.Clear();
 
-    for (var y = -10; y < 10; y++)
+    for (var y = 10; y > -10; y--)
     {
-        for (var x = -10; x < 10; x++)
+        for (var x = 10; x > -10; x--)
         {
             if (snakeGame.Fruit.Equals((Coordinate)(x, y)))
             {
@@ -42,7 +42,7 @@ void Render(SnakeGame snakeGame)
                 continue;
             }
 
-            Console.Write(snakeGame.ExistsSnakeAt((x, y)) ? "o" : "x");
+            Console.Write(snakeGame.ExistsSnakeAt((x, y)) ? "o" : " ");
         }
 
         Console.WriteLine();
