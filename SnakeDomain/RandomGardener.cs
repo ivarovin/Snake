@@ -6,5 +6,5 @@ public class RandomGardener : Gardener
     public RandomGardener(int mapSize) => this.mapSize = mapSize;
 
     public (int x, int y) Cultivate() 
-        => (new Random().Next(-mapSize, mapSize), new Random().Next(-mapSize, mapSize));
+        => (new Random().Next(Coordinate.Origin.X, mapSize), new Random().Next(Coordinate.Origin.Y, mapSize));
 }
