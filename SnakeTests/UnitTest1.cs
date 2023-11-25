@@ -194,5 +194,11 @@ namespace Snake
         {
             NewGame.Undo().Should().NotBeNull();
         }
+
+        [Test]
+        public void LookTowards_Left_ShouldNotDie()
+        {
+            NewGame.LookTowards((-1, 0)).GameOver.Should().BeFalse();
+        }
     }
 }
