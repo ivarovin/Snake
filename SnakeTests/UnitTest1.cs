@@ -216,5 +216,11 @@ namespace Snake
             Coordinate.IsOpposite((1, 0), (-1, 0)).Should().BeTrue();
             Coordinate.IsOpposite((1, 0), (0, 1)).Should().BeFalse();
         }
+
+        [Test]
+        public void MoveTowardsOppositeDirection_ItsNotPossible()
+        {
+            NewGame.LookTowards((1, 0)).LookTowards((-1, 0)).direction.Should().Be((Coordinate)(1, 0));
+        }
     }
 }
