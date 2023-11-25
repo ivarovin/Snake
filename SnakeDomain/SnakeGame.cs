@@ -48,5 +48,6 @@ public class SnakeGame
     public SnakeGame Undo() => previous ?? this;
     public bool CanUndo() => previous !=null;
     public static SnakeGame NewGame => new(new[] { Origin }, (0, 0), (1, 0), null);
+    public static SnakeGame NewGameFrom(Coordinate startPoint) => new(new[] { startPoint }, (0, 0), (1, 0), null);
     public static SnakeGame CreateWithFruitAt(Coordinate fruit) => new(new[] { Origin }, fruit, (1, 0), null);
 }
