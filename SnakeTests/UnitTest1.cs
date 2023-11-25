@@ -172,7 +172,7 @@ namespace Snake
             NewGame.CanCultivateAt((-11, 0)).Should().BeFalse();
             NewGame.CanCultivateAt((0, 11)).Should().BeFalse();
             NewGame.CanCultivateAt((0, -11)).Should().BeFalse();
-            NewGame.CanCultivateAt((5, -5)).Should().BeTrue();
+            NewGame.CanCultivateAt((5, 0)).Should().BeTrue();
         }
 
         [Test]

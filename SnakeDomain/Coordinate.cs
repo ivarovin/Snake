@@ -22,6 +22,6 @@ public readonly struct Coordinate
         };
     
     public static bool IsInsideMap(Coordinate position, int mapSize)
-        => position.X > mapSize || position.X < -mapSize || position.Y > mapSize || position.Y < -mapSize;
+        => position.X > mapSize || position.X < -Origin.X || position.Y > mapSize || position.Y < -Origin.Y;
     public static Coordinate Origin => (0, 0);
 }
