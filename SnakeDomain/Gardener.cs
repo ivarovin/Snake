@@ -1,6 +1,7 @@
-namespace Snake;
-
-public interface Gardener
+namespace Snake
 {
-    public (int x, int y) Cultivate();
+    public interface Gardener
+    {
+        public (int x, int y) Cultivate();
+    }
 }
