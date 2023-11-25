@@ -41,6 +41,7 @@ public class SnakeGame
     public SnakeGame TurnLeft() => new(Snake, Fruit, RightDirectionOf((direction.X * -1, direction.Y * -1)), this);
     public SnakeGame TurnRight() => new(Snake, Fruit, RightDirectionOf(direction), this);
     public SnakeGame GrowSnake() => new(Snake.Append(Snake.Last()), Fruit, direction, this);
+    public SnakeGame LookTowards(Coordinate where) => new(Snake.Append(Snake.Last()), Fruit, where, this);
     public bool IsEatingItselfAt(Coordinate position) => Snake.Skip(1).Any(bodyPart => bodyPart.Equals(position));
     public bool ExistsSnakeAt(Coordinate position) => Snake.Any(body => body.Equals(position));
     public SnakeGame Undo() => previous ?? this;
