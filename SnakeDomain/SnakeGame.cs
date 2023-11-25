@@ -12,6 +12,7 @@ public class SnakeGame
     Coordinate NextPosition => Snake.First() + direction;
     bool CanEat => Fruit.Equals(NextPosition);
     public bool GameOver => IsEatingItselfAt(Snake.First()) || Snake.Any(IsOutsideMap);
+    public Coordinate Head => Snake.First();
 
     SnakeGame(IEnumerable<Coordinate> snake, Coordinate fruit, Coordinate direction, SnakeGame previous)
     {
