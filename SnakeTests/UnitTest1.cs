@@ -202,9 +202,19 @@ namespace Snake
         }
 
         [Test]
-        public void LookTowards_Left_ShouldNotDie()
+        public void LookTowards_ShouldNotDie()
         {
             NewGame.LookTowards((-1, 0)).GameOver.Should().BeFalse();
+            NewGame.LookTowards((1, 0)).GameOver.Should().BeFalse();
+            NewGame.LookTowards((0, 1)).GameOver.Should().BeFalse();
+            NewGame.LookTowards((0, -1)).GameOver.Should().BeFalse();
+        }
+
+        [Test]
+        public void OppositeDirection()
+        {
+            Coordinate.IsOpposite((1, 0), (-1, 0)).Should().BeTrue();
+            Coordinate.IsOpposite((1, 0), (0, 1)).Should().BeFalse();
         }
     }
 }
