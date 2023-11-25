@@ -176,6 +176,12 @@ namespace Snake
         }
 
         [Test]
+        public void Start_GameFrom_SpecificPosition()
+        {
+            NewGameFrom((4,4)).Snake.First().Should().Be((Coordinate)(4, 4));
+        }
+
+        [Test]
         public void Fruit_IsNotCultivated_UntilPosition_IsValid()
         {
             NewGame
