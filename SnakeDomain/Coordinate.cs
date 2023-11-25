@@ -31,7 +31,7 @@ namespace Snake
         }
 
         public static bool IsInsideMap(Coordinate position, int mapSize)
-            => position.X > mapSize || position.X < -Origin.X || position.Y > mapSize || position.Y < -Origin.Y;
+            => position.X >= mapSize || position.X < -Origin.X || position.Y >= mapSize || position.Y < -Origin.Y;
         public static Coordinate Origin => (0, 0);
     }
 }

@@ -151,7 +151,7 @@ namespace Snake
         {
             var sut = NewGame;
 
-            for (var i = 0; i < 11; i++)
+            for (var i = 0; i < 10; i++)
                 sut = sut.Tick();
 
             sut.GameOver.Should().BeTrue();
