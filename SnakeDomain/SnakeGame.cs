@@ -4,7 +4,7 @@ namespace Snake;
 
 public class SnakeGame
 {
-    const int MapSize = 10;
+    public const int MapBound = 10;
     public readonly Coordinate Fruit;
     public readonly IReadOnlyCollection<Coordinate> Snake;
     readonly SnakeGame previous;
@@ -23,7 +23,7 @@ public class SnakeGame
     }
 
     public SnakeGame Tick() => GameOver ? this : EatFruitInFront().MoveSnake();
-    SnakeGame EatFruitInFront() => CanEat ? GrowSnake().Cultivate(new RandomGardener(MapSize)) : this;
+    SnakeGame EatFruitInFront() => CanEat ? GrowSnake().Cultivate(new RandomGardener(MapBound)) : this;
 
     public SnakeGame Cultivate(Gardener gardener)
     {
@@ -36,7 +36,7 @@ public class SnakeGame
     }
 
     public bool CanCultivateAt(Coordinate position) => !ExistsSnakeAt(position) && !IsOutsideMap(position);
-    static bool IsOutsideMap(Coordinate position) => IsInsideMap(position, MapSize);
+    static bool IsOutsideMap(Coordinate position) => IsInsideMap(position, MapBound);
     public SnakeGame MoveSnake() =>new(Snake.Select((part, i) => BodyPartInFrontOf(i)), Fruit, direction, this);
     Coordinate BodyPartInFrontOf(int bodyIndex) => bodyIndex == 0 ? NextPosition : Snake.ElementAt(bodyIndex - 1);
     public SnakeGame TurnLeft() => new(Snake, Fruit, RightDirectionOf((direction.X * -1, direction.Y * -1)), this);
@@ -47,7 +47,6 @@ public class SnakeGame
     public bool ExistsSnakeAt(Coordinate position) => Snake.Any(body => body.Equals(position));
     public SnakeGame Undo() => previous ?? this;
     public bool CanUndo() => previous !=null;
-
     public static SnakeGame NewGame => new(new[] { Origin }, (0, 0), (1, 0), null);
     public static SnakeGame CreateWithFruitAt(Coordinate fruit) => new(new[] { Origin }, fruit, (1, 0), null);
 }
